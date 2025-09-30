@@ -134,60 +134,60 @@ const Checkout: React.FC = () => {
           ],
         },
 
-       callback: async (response: any) => {
-  try {
-    // ✅ Verify payment on server
-    const verifyRes = await fetch("http://localhost:5000/api/verify-payment", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ reference: response.reference }),
-    });
+        callback: (response: any) => {
+          (async () => {
+            try {
+              const verifyRes = await fetch("http://localhost:5000/api/verify-payment", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ reference: response.reference }),
+              });
 
-    const verifyData = await verifyRes.json();
+              const verifyData = await verifyRes.json();
 
-    if (verifyData.success) {
-      // create order only if payment verified
-      const created = await createOrder({
-        items: state.items.map((item: any) => ({
-          productId: item.id,
-          name: item.title,
-          price: toNum(item.price),
-          quantity: toNum(item.quantity),
-          image: item.image,
-        })),
-        shippingAddress: {
-          ...formData,
-          name: ''
-        },
-        shippingMethod:
-          shippingOptions[shippingMethod as keyof typeof shippingOptions].name,
-        paymentMethod: "paystack",
-        payment: {
-          provider: "paystack",
-          status: "paid",
-          reference: response.reference,
-        },
-        totals: {
-          subtotal: toNum(subtotal),
-          shipping: toNum(shipping),
-          fees: 0,
-          grandTotal: toNum(total),
-          currency: "NGN",
-        },
-      });
+              if (verifyData.success) {
+                const created = await createOrder({
+                  items: state.items.map((item: any) => ({
+                    productId: item.id,
+                    name: item.title,
+                    price: toNum(item.price),
+                    quantity: toNum(item.quantity),
+                    image: item.image,
+                  })),
+                  shippingAddress: {
+                    ...formData,
+                    name: ''
+                  },
+                  shippingMethod:
+                    shippingOptions[shippingMethod as keyof typeof shippingOptions].name,
+                  paymentMethod: "paystack",
+                  payment: {
+                    provider: "paystack",
+                    status: "paid",
+                    reference: response.reference,
+                  },
+                  totals: {
+                    subtotal: toNum(subtotal),
+                    shipping: toNum(shipping),
+                    fees: 0,
+                    grandTotal: toNum(total),
+                    currency: "NGN",
+                  },
+                });
 
-      const createdId = created?.id ?? created;
-      dispatch({ type: "CLEAR_CART" });
-      navigate(`/order-confirmation/${createdId}`);
-    } else {
-      alert("Payment not verified. Please contact support.");
-    }
-  } catch (err) {
-    console.error("Order creation after payment failed:", err);
-  } finally {
-    setIsProcessing(false);
-  }
-},
+                const createdId = created?.id ?? created;
+                dispatch({ type: "CLEAR_CART" });
+                navigate(`/order-confirmation/${createdId}`);
+              } else {
+                alert("Payment not verified. Please contact support.");
+              }
+            } catch (err) {
+              console.error("Order creation after payment failed:", err);
+            } finally {
+              setIsProcessing(false);
+            }
+          })();
+        },
 
         onClose: () => {
           setIsProcessing(false);
