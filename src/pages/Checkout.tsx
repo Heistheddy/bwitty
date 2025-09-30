@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CreditCard, Building2 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useOrders } from '../context/OrderContext';
+import PaystackPop from '@paystack/inline-js';
 
 const PAYSTACK_PUBLIC_KEY =
   import.meta.env.VITE_PAYSTACK_PUBLIC_KEY ||
@@ -77,43 +78,14 @@ const Checkout: React.FC = () => {
     });
   };
 
-  // load Paystack inline script once
-  const loadPaystackScript = (): Promise<void> =>
-    new Promise((resolve, reject) => {
-      if ((window as any).PaystackPop) return resolve();
-      if (document.getElementById('paystack-script')) {
-        // script already added but not yet available
-        const check = setInterval(() => {
-          if ((window as any).PaystackPop) {
-            clearInterval(check);
-            resolve();
-          }
-        }, 50);
-        setTimeout(() => {
-          if (!(window as any).PaystackPop) {
-            clearInterval(check);
-            reject(new Error('Paystack failed to load'));
-          }
-        }, 5000);
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = 'https://js.paystack.co/v1/inline.js';
-      script.id = 'paystack-script';
-      script.async = true;
-      script.onload = () => resolve();
-      script.onerror = () => reject(new Error('Paystack script failed to load'));
-      document.body.appendChild(script);
-    });
-
   const payWithPaystack = async () => {
     try {
       setIsProcessing(true);
-      await loadPaystackScript();
 
       const amountKobo = Math.round(toNum(total) * 100);
 
-      const handler = (window as any).PaystackPop?.setup({
+      const paystack = new PaystackPop();
+      paystack.newTransaction({
         key: PAYSTACK_PUBLIC_KEY,
         email: formData.email || '',
         amount: amountKobo,
@@ -191,18 +163,8 @@ const Checkout: React.FC = () => {
 
         onClose: () => {
           setIsProcessing(false);
-          // user closed payment modal
         },
       });
-
-      // open iframe
-      if (handler && typeof handler.openIframe === 'function') {
-        handler.openIframe();
-      } else {
-        // fallback if setup didn't return handler
-        console.error('Paystack handler not available');
-        setIsProcessing(false);
-      }
     } catch (err) {
       console.error('Paystack error:', err);
       setIsProcessing(false);
