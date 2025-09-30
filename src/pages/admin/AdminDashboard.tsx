@@ -225,7 +225,6 @@ const AdminDashboard: React.FC = () => {
           description: productData.description,
           price: productData.price,
           stock: productData.stock,
-          is_active: productData.is_active,
           is_active: productData.is_active
         });
 
