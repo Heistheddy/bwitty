@@ -1,72 +1,19 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Smartphone, Building2, Globe } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import { useOrders } from '../context/OrderContext';
+import { MapPin, Phone, Mail, Clock, Send, Instagram } from 'lucide-react';
 
-const Checkout: React.FC = () => {
-  const { state, dispatch } = useCart();
-  const { createOrder } = useOrders();
-  const navigate = useNavigate();
-
+const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
-    firstName: '',
-    lastName: '',
     phone: '',
-    address: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: 'Nigeria',
+    subject: '',
+    message: '',
   });
 
-  const [shippingMethod, setShippingMethod] = useState('standard');
-  const [paymentMethod, setPaymentMethod] = useState('paystack');
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  // helper to coerce values safely to numbers
-  const toNum = (v: any) => {
-    const n = Number(v);
-    return Number.isFinite(n) ? n : 0;
-  };
-
-  const formatPrice = (price: number) => {
-    const safe = toNum(price);
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
-      minimumFractionDigits: 0,
-    }).format(safe);
-  };
-
-  // safe totalWeight (defaults each missing value to 0)
-  const totalWeight = state.items.reduce(
-    (sum: number, item: any) => sum + (toNum(item.weight) * toNum(item.quantity)),
-    0
-  );
-
-  // shipping options computed using safe numbers
-  const shippingOptions: Record<string, { name: string; price: number }> = {
-    standard: { name: 'Standard Delivery (5-7 days)', price: Math.max(2500, totalWeight * 500) },
-    express: { name: 'Express Delivery (2-3 days)', price: Math.max(5000, totalWeight * 800) },
-    overnight: { name: 'Next Day Delivery', price: Math.max(8000, totalWeight * 1200) },
-  };
-
-  // compute subtotal safely from cart items (fallback if state.total is missing/invalid)
-  const subtotalFromItems = state.items.reduce(
-    (sum: number, item: any) => sum + (toNum(item.price) * toNum(item.quantity)),
-    0
-  );
-  const subtotal = toNum(state.total) || subtotalFromItems;
-
-  // choose shipping safely
-  const shipping = shippingOptions[shippingMethod as keyof typeof shippingOptions]?.price || 0;
-
-  // final total as numbers
-  const total = toNum(subtotal) + toNum(shipping);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -75,91 +22,172 @@ const Checkout: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsProcessing(true);
+    setIsSubmitting(true);
 
-    try {
-      // Create order with real order management
-      const orderId = await createOrder({
-        items: state.items.map((item: any) => ({
-          productId: item.id,
-          name: item.title,
-          price: toNum(item.price),
-          quantity: toNum(item.quantity),
-          image: item.image,
-        })),
-        shippingAddress: {
-          name: `${formData.firstName} ${formData.lastName}`,
-          phone: formData.phone,
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          country: formData.country,
-          postalCode: formData.postalCode,
-        },
-        shippingMethod: shippingOptions[shippingMethod as keyof typeof shippingOptions].name,
-        paymentMethod: paymentMethod as 'paystack' | 'opay' | 'cod',
-        totals: {
-          subtotal: toNum(subtotal),
-          shipping: toNum(shipping),
-          fees: 0,
-          grandTotal: toNum(total),
-          currency: 'NGN',
-        },
-      });
-
-      dispatch({ type: 'CLEAR_CART' });
-      navigate(`/order-confirmation/${orderId}`);
-    } catch (error) {
-      console.error('Order creation failed:', error);
-      // Handle error appropriately
-    } finally {
-      setIsProcessing(false);
-    }
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitted(true);
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    }, 2000);
   };
-
-  if (state.items.length === 0) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">No items to checkout</h1>
-          <Link to="/shop" className="text-yellow-600 hover:text-yellow-700">
-            Return to Shop
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <Link
-            to="/cart"
-            className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Cart
-          </Link>
-          <h1 className="text-3xl font-bold text-gray-900">Checkout</h1>
+      {/* Header */}
+      <section className="bg-gradient-to-r from-black via-gray-900 to-black text-white py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
+          <p className="text-xl text-gray-200">
+            Get in touch with our team - we're here to help with all your needs
+          </p>
         </div>
+      </section>
 
+      <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Checkout Form */}
+          {/* Contact Information */}
           <div className="space-y-8">
-            {/* Contact Information */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h2>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+              <p className="text-gray-600 mb-8">
+                We'd love to hear from you! Whether you have questions about our products, need assistance 
+                with an order, or just want to say hello, don't hesitate to reach out.
+              </p>
+            </div>
+
+            {/* Contact Details */}
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="bg-yellow-500 p-3 rounded-lg">
+                  <MapPin className="w-6 h-6 text-black" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-1">Our Location</h3>
+                  <p className="text-gray-600">
+                    Dr Efosa Osayamwen Close<br />
+                    Cedar Estate, Therra Peace Estate
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="bg-yellow-500 p-3 rounded-lg">
+                  <Phone className="w-6 h-6 text-black" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-1">Phone & WhatsApp</h3>
+                  <p className="text-gray-600">08023170466</p>
+                  <a
+                    href="https://wa.me/2348023170466"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors"
+                  >
+                    Chat on WhatsApp
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="bg-yellow-500 p-3 rounded-lg">
+                  <Mail className="w-6 h-6 text-black" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
+                  <p className="text-gray-600">bwittyhairs@gmail.com</p>
+                  <p className="text-sm text-gray-500 mt-1">
+                    We typically respond within 24 hours
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="bg-yellow-500 p-3 rounded-lg">
+                  <Clock className="w-6 h-6 text-black" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-1">Business Hours</h3>
+                  <div className="text-gray-600 text-sm">
+                    <p>Monday - Friday: 9:00 AM - 7:00 PM</p>
+                    <p>Saturday: 10:00 AM - 6:00 PM</p>
+                    <p>Sunday: 12:00 PM - 5:00 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Media */}
+            <div className="pt-6 border-t border-gray-200">
+              <h3 className="font-semibold text-gray-900 mb-4">Follow Us</h3>
+              <div className="flex space-x-4">
+                <a
+                  href="https://www.instagram.com/bwittyhairs?igsh=aDZlamJicXdhOHh0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-lg text-white hover:shadow-lg transition-shadow"
+                >
+                  <Instagram className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@bwittyhairs?_t=ZS-8yzsgTBd36l&_r=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-black p-3 rounded-lg text-white hover:shadow-lg transition-shadow"
+                >
+                  <div className="w-6 h-6 bg-current rounded"></div>
+                </a>
+              </div>
+            </div>
+
+            {/* Bank Details */}
+            <div className="bg-yellow-50 p-6 rounded-lg">
+              <h3 className="font-semibold text-gray-900 mb-3">Bank Details</h3>
+              <div className="text-sm text-gray-700">
+                <p className="mb-1"><strong>Bank:</strong> OPay</p>
+                <p><strong>Account Number:</strong> 6105117947</p>
+                <p className="text-xs text-gray-600 mt-2">
+                  Please use your order number or name as reference when making transfers
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="bg-white rounded-lg shadow-sm p-8">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Send us a Message</h2>
+              <p className="text-gray-600">
+                Fill out the form below and we'll get back to you as soon as possible.
+              </p>
+            </div>
+
+            {submitted && (
+              <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
+                <div className="flex items-center">
+                  <div className="bg-green-500 rounded-full p-1 mr-3">
+                    <Send className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-green-900">Message Sent!</p>
+                    <p className="text-sm text-green-700">
+                      Thank you for contacting us. We'll get back to you soon.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    First Name *
+                    Full Name *
                   </label>
                   <input
                     type="text"
-                    name="firstName"
-                    value={formData.firstName}
+                    name="name"
+                    value={formData.name}
                     onChange={handleInputChange}
                     required
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
@@ -167,254 +195,89 @@ const Checkout: React.FC = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Last Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                  />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                  />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone Number *
+                    Phone Number
                   </label>
                   <input
                     type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    required
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                     placeholder="08023170466"
                   />
                 </div>
               </div>
-            </div>
 
-            {/* Shipping Information */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Shipping Address</h2>
-              <div className="grid grid-cols-1 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Address *
-                  </label>
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                  />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      City *
-                    </label>
-                    <input
-                      type="text"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      State *
-                    </label>
-                    <input
-                      type="text"
-                      name="state"
-                      value={formData.state}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Postal Code
-                    </label>
-                    <input
-                      type="text"
-                      name="postalCode"
-                      value={formData.postalCode}
-                      onChange={handleInputChange}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Country
-                    </label>
-                    <select
-                      name="country"
-                      value={formData.country}
-                      onChange={handleInputChange}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    >
-                      <option value="Nigeria">Nigeria</option>
-                      <option value="Ghana">Ghana</option>
-                      <option value="Kenya">Kenya</option>
-                      <option value="South Africa">South Africa</option>
-                      <option value="United States">United States</option>
-                      <option value="United Kingdom">United Kingdom</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Shipping Method */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Shipping Method</h2>
-              <div className="space-y-3">
-                {Object.entries(shippingOptions).map(([key, option]) => (
-                  <label key={key} className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-yellow-500 transition-colors cursor-pointer">
-                    <input
-                      type="radio"
-                      name="shipping"
-                      value={key}
-                      checked={shippingMethod === key}
-                      onChange={(e) => setShippingMethod(e.target.value)}
-                      className="text-yellow-500"
-                    />
-                    <div className="ml-3 flex-grow">
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-900">{option.name}</span>
-                        <span className="font-bold text-gray-900">{formatPrice(option.price)}</span>
-                      </div>
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Payment Method */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Payment Method</h2>
-              <div className="space-y-3">
-                <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-yellow-500 transition-colors cursor-pointer">
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="paystack"
-                    checked={paymentMethod === 'paystack'}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="text-yellow-500"
-                  />
-                  <CreditCard className="ml-3 w-5 h-5 text-gray-500" />
-                  <div className="ml-3 flex-grow">
-                    <span className="font-medium text-gray-900">Paystack (Card/Bank/OPay)</span>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <div className="px-2 py-1 bg-blue-600 text-white text-xs rounded">VISA</div>
-                      <div className="px-2 py-1 bg-red-600 text-white text-xs rounded">MC</div>
-                      <div className="px-2 py-1 bg-green-600 text-white text-xs rounded">OPay</div>
-                    </div>
-                  </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address *
                 </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                />
+              </div>
 
-                <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-yellow-500 transition-colors cursor-pointer">
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="bank-transfer"
-                    checked={paymentMethod === 'bank-transfer'}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="text-yellow-500"
-                  />
-                  <Building2 className="ml-3 w-5 h-5 text-gray-500" />
-                  <div className="ml-3">
-                    <span className="font-medium text-gray-900">Bank Transfer</span>
-                    <p className="text-sm text-gray-600">OPAY: 6105117947</p>
-                  </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Subject *
                 </label>
-              </div>
-            </div>
-          </div>
-
-          {/* Order Summary */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-sm p-6 sticky top-24">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Order Summary</h2>
-
-              {/* Items */}
-              <div className="space-y-3 mb-4 max-h-60 overflow-y-auto">
-                {state.items.map((item: any) => (
-                  <div key={item.id} className="flex items-center space-x-3">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-12 h-12 object-cover rounded"
-                    />
-                    <div className="flex-grow">
-                      <h3 className="font-medium text-gray-900 text-sm">{item.title}</h3>
-                      <p className="text-gray-600 text-sm">Qty: {toNum(item.quantity)}</p>
-                    </div>
-                    <span className="font-medium text-gray-900 text-sm">
-                      {formatPrice(toNum(item.price) * toNum(item.quantity))}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t border-gray-200 pt-4 space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
-                  <span className="font-medium">{formatPrice(subtotal)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
-                  <span className="font-medium">{formatPrice(shipping)}</span>
-                </div>
-                <div className="flex justify-between text-lg font-bold">
-                  <span>Total</span>
-                  <span>{formatPrice(total)}</span>
-                </div>
-              </div>
-
-              <form onSubmit={handleSubmit} className="mt-6">
-                <button
-                  type="submit"
-                  disabled={isProcessing}
-                  className={`w-full font-bold py-3 px-4 rounded-lg transition-colors ${
-                    isProcessing
-                      ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                      : 'bg-yellow-500 hover:bg-yellow-600 text-black'
-                  }`}
+                <select
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 >
-                  {isProcessing ? 'Processing...' : `Complete Order - ${formatPrice(total)}`}
-                </button>
-              </form>
-
-              <div className="mt-4 text-center text-xs text-gray-500">
-                <p>Secure checkout powered by Paystack</p>
-                <p className="mt-1">Your payment information is protected</p>
+                  <option value="">Select a subject</option>
+                  <option value="product-inquiry">Product Inquiry</option>
+                  <option value="order-status">Order Status</option>
+                  <option value="shipping">Shipping Question</option>
+                  <option value="return-refund">Return/Refund</option>
+                  <option value="technical-support">Technical Support</option>
+                  <option value="partnership">Business Partnership</option>
+                  <option value="other">Other</option>
+                </select>
               </div>
-            </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Message *
+                </label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={5}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-none"
+                  placeholder="Please provide as much detail as possible..."
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center ${
+                  isSubmitting
+                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                    : 'bg-yellow-500 hover:bg-yellow-600 text-black'
+                }`}
+              >
+                {isSubmitting ? (
+                  'Sending...'
+                ) : (
+                  <>
+                    <Send className="w-5 h-5 mr-2" />
+                    Send Message
+                  </>
+                )}
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -422,4 +285,4 @@ const Checkout: React.FC = () => {
   );
 };
 
-export default Checkout;
+export default Contact;

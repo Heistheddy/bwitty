@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Building2 } from 'lucide-react';
+import { ArrowLeft, CreditCard, /* Building2 */ } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useOrders } from '../context/OrderContext';
 
@@ -239,7 +239,7 @@ const Checkout: React.FC = () => {
           postalCode: formData.postalCode,
         },
         shippingMethod: shippingOptions[shippingMethod as keyof typeof shippingOptions].name,
-        paymentMethod: paymentMethod as 'paystack' | 'opay' | 'cod',
+        paymentMethod: paymentMethod as 'paystack' | 'cod',
         totals: {
           subtotal: toNum(subtotal),
           shipping: toNum(shipping),
@@ -475,12 +475,11 @@ const Checkout: React.FC = () => {
                     <div className="flex items-center space-x-2 mt-1">
                       <div className="px-2 py-1 bg-blue-600 text-white text-xs rounded">VISA</div>
                       <div className="px-2 py-1 bg-red-600 text-white text-xs rounded">MC</div>
-                      <div className="px-2 py-1 bg-green-600 text-white text-xs rounded">OPay</div>
                     </div>
                   </div>
                 </label>
 
-                <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-yellow-500 transition-colors cursor-pointer">
+              {/*   <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-yellow-500 transition-colors cursor-pointer">
                   <input
                     type="radio"
                     name="payment"
@@ -494,7 +493,7 @@ const Checkout: React.FC = () => {
                     <span className="font-medium text-gray-900">Bank Transfer</span>
                     <p className="text-sm text-gray-600">OPAY: 6105117947</p>
                   </div>
-                </label>
+                </label> */}
               </div>
             </div>
           </div>
