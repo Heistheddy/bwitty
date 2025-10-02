@@ -1,19 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, Link } from 'react-router-dom';
-import { 
-  Package, 
-  ShoppingCart, 
-  Users, 
-  DollarSign, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  Search,
-  Upload,
-  Image as ImageIcon,
-  LogOut,
-  X
-} from 'lucide-react';
+import { Package, ShoppingCart, Users, DollarSign, Plus, CreditCard as Edit, Trash2, Search, Upload, Image as ImageIcon, LogOut, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { productService, DatabaseProduct, ProductImage, supabase } from '../../lib/supabase';
 import { useOrders } from '../../context/OrderContext';
@@ -225,7 +212,6 @@ const AdminDashboard: React.FC = () => {
           description: productData.description,
           price: productData.price,
           stock: productData.stock,
-          is_active: productData.is_active,
           is_active: productData.is_active
         });
 
