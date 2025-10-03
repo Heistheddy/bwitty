@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Lock, Eye, EyeOff, ArrowLeft, CheckCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { supabase } from '../lib/supabase';
 
 const ChangePassword: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -58,14 +59,25 @@ const ChangePassword: React.FC = () => {
       return;
     }
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: formData.newPassword,
+      });
+
+      if (updateError) {
+        throw updateError;
+      }
+
       setSuccess(true);
       setTimeout(() => {
-        navigate(isAdmin ? '/admin/dashboard' : '/');
+        navigate(isAdmin ? '/admin/dashboard' : '/account');
       }, 2000);
-    }, 2000);
+    } catch (err: any) {
+      console.error('Password change error:', err);
+      setError(err.message || 'Failed to update password. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!user) {

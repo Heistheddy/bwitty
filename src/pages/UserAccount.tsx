@@ -4,11 +4,12 @@ import { User, Package, MapPin, Phone, Mail, Calendar, Eye, Truck } from 'lucide
 import { useAuth } from '../context/AuthContext';
 import { useOrders } from '../context/OrderContext';
 import { Order } from '../data/orders';
+import ShippingAddressManager from '../components/ShippingAddressManager';
 
 const UserAccount: React.FC = () => {
   const { user, isAuthenticated, updateProfile, loading } = useAuth();
   const { getUserOrders } = useOrders();
-  const [activeTab, setActiveTab] = useState<'profile' | 'orders'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'shipping'>('profile');
   const [orders, setOrders] = useState<Order[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
@@ -130,6 +131,7 @@ const UserAccount: React.FC = () => {
             {[
               { id: 'profile', label: 'Profile', icon: User },
               { id: 'orders', label: 'Orders', icon: Package },
+              { id: 'shipping', label: 'Shipping', icon: MapPin },
             ].map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
@@ -311,14 +313,17 @@ const UserAccount: React.FC = () => {
                   </div>
 
                   <div>
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Default Shipping Address</h3>
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Manage Addresses</h3>
                     <div className="p-4 border border-gray-200 rounded-lg">
                       <div className="flex items-start space-x-3">
                         <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 mt-1" />
                         <div className="text-gray-600 text-sm sm:text-base">
-                          <p>No default address set</p>
-                          <button className="text-pink-600 hover:text-pink-700 text-xs sm:text-sm mt-1">
-                            Add Address
+                          <p>Manage your shipping addresses</p>
+                          <button
+                            onClick={() => setActiveTab('shipping')}
+                            className="text-pink-600 hover:text-pink-700 text-xs sm:text-sm mt-1 font-medium"
+                          >
+                            Go to Shipping Addresses
                           </button>
                         </div>
                       </div>
@@ -469,6 +474,13 @@ const UserAccount: React.FC = () => {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {/* Shipping Tab */}
+        {activeTab === 'shipping' && user && (
+          <div className="bg-white rounded-lg shadow-sm p-8">
+            <ShippingAddressManager userId={user.id} />
           </div>
         )}
       </div>

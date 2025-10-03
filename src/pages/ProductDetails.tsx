@@ -4,33 +4,63 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Star, Truck, Shield, Heart, Minus, Plus, ShoppingCart } from 'lucide-react';
 import { productService, DatabaseProduct, ProductImage, supabase, subscribeToProducts } from '../lib/supabase';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import { reviewService, ProductReview } from '../lib/reviews';
+import { favoriteService } from '../lib/favorites';
 import ImageCarousel from '../components/ImageCarousel';
+import { useToast } from '../hooks/use-toast';
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { dispatch } = useCart();
+  const { user, isAuthenticated } = useAuth();
+  const { toast } = useToast();
   const [product, setProduct] = useState<(DatabaseProduct & { product_images: ProductImage[] }) | null>(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [reviews, setReviews] = useState<ProductReview[]>([]);
+  const [averageRating, setAverageRating] = useState(0);
+  const [reviewCount, setReviewCount] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
+  const [userReview, setUserReview] = useState<ProductReview | null>(null);
 
   useEffect(() => {
-    if (id) {
-      loadProduct();
-    }
-  }, [id]);
+    let mounted = true;
+
+    const initializeProduct = async () => {
+      if (id && mounted) {
+        await Promise.all([
+          loadProduct(),
+          loadReviews(),
+          user ? checkFavorite() : Promise.resolve()
+        ]);
+      }
+    };
+
+    initializeProduct();
+
+    return () => {
+      mounted = false;
+    };
+  }, [id, user]);
 
   // Subscribe to realtime changes
   useEffect(() => {
+    let mounted = true;
+
     const subscription = subscribeToProducts((payload) => {
       console.log('Product detail realtime update:', payload);
-      
+
       // Only reload if this product was affected
-      if (id && (payload.new?.id === id || payload.old?.id === id)) {
+      if (id && mounted && (payload.new?.id === id || payload.old?.id === id)) {
         loadProduct();
       }
     });
 
     return () => {
+      mounted = false;
       if (subscription) {
         subscription.unsubscribe();
       }
@@ -39,7 +69,7 @@ const ProductDetails: React.FC = () => {
 
   const loadProduct = async () => {
     if (!id) return;
-    
+
     setLoading(true);
     try {
       const { data: productData, error } = await supabase
@@ -69,13 +99,107 @@ const ProductDetails: React.FC = () => {
         }
         throw error;
       }
-      
+
       setProduct(productData);
     } catch (error) {
       console.error('Error loading product:', error);
       setProduct(null);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadReviews = async () => {
+    if (!id) return;
+    try {
+      const reviewsData = await reviewService.getProductReviews(id);
+      setReviews(reviewsData);
+
+      const stats = await reviewService.getAverageRating(id);
+      setAverageRating(stats.average);
+      setReviewCount(stats.count);
+
+      if (user) {
+        const userReviewData = await reviewService.getUserReview(id, user.id);
+        setUserReview(userReviewData);
+      }
+    } catch (error) {
+      console.error('Error loading reviews:', error);
+    }
+  };
+
+  const checkFavorite = async () => {
+    if (!id || !user) return;
+    try {
+      const isFav = await favoriteService.isFavorite(id, user.id);
+      setIsFavorite(isFav);
+    } catch (error) {
+      console.error('Error checking favorite:', error);
+    }
+  };
+
+  const handleToggleFavorite = async () => {
+    if (!isAuthenticated) {
+      toast({
+        title: 'Login Required',
+        description: 'Please login to add favorites',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      const newStatus = await favoriteService.toggleFavorite(id!);
+      setIsFavorite(newStatus);
+      toast({
+        title: newStatus ? 'Added to Favorites' : 'Removed from Favorites',
+        description: newStatus ? 'Product added to your favorites' : 'Product removed from favorites',
+      });
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update favorites',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleSubmitReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isAuthenticated) {
+      toast({
+        title: 'Login Required',
+        description: 'Please login to submit a review',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      if (userReview) {
+        await reviewService.updateReview(userReview.id, reviewForm.rating, reviewForm.comment);
+        toast({
+          title: 'Review Updated',
+          description: 'Your review has been updated successfully',
+        });
+      } else {
+        await reviewService.addReview(id!, reviewForm.rating, reviewForm.comment);
+        toast({
+          title: 'Review Submitted',
+          description: 'Thank you for your review!',
+        });
+      }
+      setShowReviewForm(false);
+      setReviewForm({ rating: 5, comment: '' });
+      loadReviews();
+    } catch (error) {
+      console.error('Error submitting review:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to submit review',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -176,14 +300,16 @@ const ProductDetails: React.FC = () => {
                     <Star
                       key={i}
                       className={`w-5 h-5 ${
-                        i < Math.floor(4.5) // Default rating
+                        i < Math.floor(averageRating)
                           ? 'text-pink-400 fill-current'
                           : 'text-gray-300'
                       }`}
                     />
                   ))}
                 </div>
-                <span className="text-gray-600">(0 reviews)</span>
+                <span className="text-gray-600">
+                  {averageRating > 0 ? averageRating.toFixed(1) : 'No rating'} ({reviewCount} reviews)
+                </span>
               </div>
             </div>
 
@@ -245,8 +371,16 @@ const ProductDetails: React.FC = () => {
                     <ShoppingCart className="w-5 h-5 mr-2" />
                     Add to Cart
                   </button>
-                  <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                    <Heart className="w-5 h-5" />
+                  <button
+                    onClick={handleToggleFavorite}
+                    className={`p-3 border rounded-lg transition-colors ${
+                      isFavorite
+                        ? 'bg-pink-50 border-pink-500 text-pink-500'
+                        : 'border-gray-300 hover:bg-gray-50 text-gray-600'
+                    }`}
+                    title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                  >
+                    <Heart className={`w-5 h-5 ${isFavorite ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
@@ -270,6 +404,128 @@ const ProductDetails: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="bg-white rounded-lg shadow-sm p-8 mb-12">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">Customer Reviews</h2>
+            {isAuthenticated && (
+              <button
+                onClick={() => {
+                  setShowReviewForm(!showReviewForm);
+                  if (userReview) {
+                    setReviewForm({ rating: userReview.rating, comment: userReview.comment || '' });
+                  }
+                }}
+                className="bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+              >
+                {userReview ? 'Edit Review' : 'Write Review'}
+              </button>
+            )}
+          </div>
+
+          {showReviewForm && (
+            <form onSubmit={handleSubmitReview} className="mb-8 p-6 bg-gray-50 rounded-lg">
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                <div className="flex space-x-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                      className="focus:outline-none"
+                    >
+                      <Star
+                        className={`w-8 h-8 ${
+                          star <= reviewForm.rating
+                            ? 'text-pink-500 fill-current'
+                            : 'text-gray-300'
+                        }`}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Comment</label>
+                <textarea
+                  value={reviewForm.comment}
+                  onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
+                  rows={4}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  placeholder="Share your thoughts about this product..."
+                />
+              </div>
+
+              <div className="flex space-x-3">
+                <button
+                  type="submit"
+                  className="bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+                >
+                  {userReview ? 'Update Review' : 'Submit Review'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowReviewForm(false);
+                    setReviewForm({ rating: 5, comment: '' });
+                  }}
+                  className="border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium py-2 px-6 rounded-lg transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          )}
+
+          {reviews.length > 0 ? (
+            <div className="space-y-6">
+              {reviews.map((review) => (
+                <div key={review.id} className="border-b border-gray-200 pb-6 last:border-0">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <p className="font-semibold text-gray-900">{review.user_name}</p>
+                      <div className="flex items-center space-x-2">
+                        <div className="flex">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`w-4 h-4 ${
+                                i < review.rating
+                                  ? 'text-pink-400 fill-current'
+                                  : 'text-gray-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-sm text-gray-500">
+                          {new Date(review.created_at).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  {review.comment && (
+                    <p className="text-gray-600 mt-2">{review.comment}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-600 mb-4">No reviews yet. Be the first to review this product!</p>
+              {!isAuthenticated && (
+                <Link
+                  to="/login"
+                  className="text-pink-600 hover:text-pink-700 font-medium"
+                >
+                  Login to write a review
+                </Link>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Related Products */}

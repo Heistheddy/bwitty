@@ -15,7 +15,15 @@ const Shop: React.FC = () => {
   });
 
   useEffect(() => {
-    loadProducts();
+    let mounted = true;
+
+    const initializeProducts = async () => {
+      if (mounted) {
+        await loadProducts();
+      }
+    };
+
+    initializeProducts();
 
     // ✅ Realtime sync with admin dashboard
     const channel = supabase
@@ -23,16 +31,21 @@ const Shop: React.FC = () => {
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'products' },
-        () => loadProducts()
+        () => {
+          if (mounted) loadProducts();
+        }
       )
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'product_images' },
-        () => loadProducts()
+        () => {
+          if (mounted) loadProducts();
+        }
       )
       .subscribe();
 
     return () => {
+      mounted = false;
       supabase.removeChannel(channel);
     };
   }, []);
