@@ -3,11 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CreditCard, /* Building2 */ } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useOrders } from '../context/OrderContext';
-import PaystackPop from '@paystack/inline-js';
 
 const PAYSTACK_PUBLIC_KEY =
   import.meta.env.VITE_PAYSTACK_PUBLIC_KEY ||
-  'pk_test_6997e09323658f32765ce07f13708f3cfa2bffd8';
+  'pk_live_3b5bcce4bdce01dce992ce6a972caebcf349ed48';
 
 const Checkout: React.FC = () => {
   const { state, dispatch } = useCart();
@@ -78,14 +77,43 @@ const Checkout: React.FC = () => {
     });
   };
 
+  // load Paystack inline script once
+  const loadPaystackScript = (): Promise<void> =>
+    new Promise((resolve, reject) => {
+      if ((window as any).PaystackPop) return resolve();
+      if (document.getElementById('paystack-script')) {
+        // script already added but not yet available
+        const check = setInterval(() => {
+          if ((window as any).PaystackPop) {
+            clearInterval(check);
+            resolve();
+          }
+        }, 50);
+        setTimeout(() => {
+          if (!(window as any).PaystackPop) {
+            clearInterval(check);
+            reject(new Error('Paystack failed to load'));
+          }
+        }, 5000);
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://js.paystack.co/v2/inline.js';
+      script.id = 'paystack-script';
+      script.async = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Paystack script failed to load'));
+      document.body.appendChild(script);
+    });
+
   const payWithPaystack = async () => {
     try {
       setIsProcessing(true);
+      await loadPaystackScript();
 
       const amountKobo = Math.round(toNum(total) * 100);
 
-      const paystack = new PaystackPop();
-      paystack.newTransaction({
+      const handler = (window as any).PaystackPop?.setup({
         key: PAYSTACK_PUBLIC_KEY,
         email: formData.email || '',
         amount: amountKobo,
@@ -106,65 +134,83 @@ const Checkout: React.FC = () => {
           ],
         },
 
-        callback: (response: any) => {
-          (async () => {
-            try {
-              const verifyRes = await fetch("http://localhost:5000/api/verify-payment", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ reference: response.reference }),
-              });
+       callback: async (response: any) => {
+      console.log("PAYSTACK CALLBACK FIRED ✅", response);
+  try {
+    // ✅ Verify payment on server
+    const verifyRes = await fetch("http://localhost:5000/api/verify-payment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reference: response.reference }),
+    });
 
-              const verifyData = await verifyRes.json();
+    const verifyData = await verifyRes.json();
+    console.log("Verification result:", verifyData);
 
-              if (verifyData.success) {
-                const created = await createOrder({
-                  items: state.items.map((item: any) => ({
-                    productId: item.id,
-                    name: item.title,
-                    price: toNum(item.price),
-                    quantity: toNum(item.quantity),
-                    image: item.image,
-                  })),
-                  shippingAddress: {
-                    ...formData,
-                    name: ''
-                  },
-                  shippingMethod:
-                    shippingOptions[shippingMethod as keyof typeof shippingOptions].name,
-                  paymentMethod: "paystack",
-                  payment: {
-                    provider: "paystack",
-                    status: "paid",
-                    reference: response.reference,
-                  },
-                  totals: {
-                    subtotal: toNum(subtotal),
-                    shipping: toNum(shipping),
-                    fees: 0,
-                    grandTotal: toNum(total),
-                    currency: "NGN",
-                  },
-                });
-
-                const createdId = created?.id ?? created;
-                dispatch({ type: "CLEAR_CART" });
-                navigate(`/order-confirmation/${createdId}`);
-              } else {
-                alert("Payment not verified. Please contact support.");
-              }
-            } catch (err) {
-              console.error("Order creation after payment failed:", err);
-            } finally {
-              setIsProcessing(false);
-            }
-          })();
+    if (verifyData.success) {
+      // create order only if payment verified
+      const created = await createOrder({
+        items: state.items.map((item: any) => ({
+          productId: item.id,
+          name: item.title,
+          price: toNum(item.price),
+          quantity: toNum(item.quantity),
+          image: item.image,
+        })),
+        shippingAddress: {
+        name: `${formData.firstName} ${formData.lastName}`,
+        phone: formData.phone,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        country: formData.country,
+        postalCode: formData.postalCode,
         },
+
+        shippingMethod:
+          shippingOptions[shippingMethod as keyof typeof shippingOptions].name,
+        paymentMethod: "paystack",
+        payment: {
+          provider: "paystack",
+          status: "paid",
+          reference: response.reference,
+        },
+        totals: {
+          subtotal: toNum(subtotal),
+          shipping: toNum(shipping),
+          fees: 0,
+          grandTotal: toNum(total),
+          currency: "NGN",
+        },
+      });
+
+      const createdId = created?.id ?? created;
+      dispatch({ type: "CLEAR_CART" });
+      navigate(`/order-confirmation/${createdId}`);
+    } else {
+      alert("Payment not verified. Please contact support.");
+    }
+  } catch (err) {
+    console.error("Order creation after payment failed:", err);
+  } finally {
+    setIsProcessing(false);
+  }
+},
 
         onClose: () => {
           setIsProcessing(false);
+          // user closed payment modal
         },
       });
+
+      // open iframe
+      if (handler && typeof handler.openIframe === 'function') {
+        handler.openIframe();
+      } else {
+        // fallback if setup didn't return handler
+        console.error('Paystack handler not available');
+        setIsProcessing(false);
+      }
     } catch (err) {
       console.error('Paystack error:', err);
       setIsProcessing(false);

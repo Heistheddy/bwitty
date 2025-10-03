@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Categories */}
+          {/* {/* Categories }
           <div className="space-y-4">
             <h3 className="text-base sm:text-lg font-semibold text-yellow-400">Shop Categories</h3>
             <ul className="space-y-2">
@@ -75,7 +75,7 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Contact Info */}
           <div className="space-y-4">

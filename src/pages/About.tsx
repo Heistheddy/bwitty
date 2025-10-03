@@ -11,7 +11,7 @@ const About: React.FC = () => {
             About <span className="text-yellow-400">BWITTY NG LTD</span>
           </h1>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-            Your trusted partner for premium hair products, fashion, gadgets, and household essentials. 
+            Your trusted partner for premium hair products and more. 
             We're committed to delivering quality and style that transforms your everyday life.
           </p>
         </div>
@@ -28,24 +28,25 @@ const About: React.FC = () => {
             
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-                BWITTY NG LTD began with a simple mission: to provide our customers with access to premium 
-                quality products that enhance their lifestyle and boost their confidence. What started as a 
-                passion for hair care and beauty has evolved into a comprehensive marketplace offering 
-                everything you need to look and feel your best.
+                At Bwitty NG Ltd, we believe that every customer deserves more than just services 
+                — they deserve reliability, peace of mind, and solutions that turn visions into reality. 
+                Founded under the leadership of Blessing Unuigboje Anderson, our company is built on 
+                the core values of trust, professionalism, and a commitment to achieving our customers’ 
+                dreams.
               </p>
               
               <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-                Located in the heart of Cedar Estate, Therra Peace Estate, we understand the unique needs 
-                of our Nigerian customers and the growing demand for authentic, high-quality products. 
-                Our carefully curated selection spans from luxurious hair products including premium wigs, 
-                extensions, and closures, to modern clothing, innovative gadgets, and essential household items.
+                We specialize in providing reliable and seamless business solutions that empower 
+                individuals and organizations to grow and thrive. Our approach is centered on 
+                peace of mind, ensuring that every client feels confident and secure while working 
+                with us.
               </p>
               
               <p className="text-gray-600 text-lg leading-relaxed">
-                Today, we're proud to serve customers not just locally but nationwide, building relationships 
-                based on trust, quality, and exceptional service. Every product we offer is selected with 
-                care, ensuring that when you shop with BWITTY NG LTD, you're investing in items that will 
-                exceed your expectations.
+                Whether you are partnering with us for wholesale services, individualpurchase, 
+                or long-term purchases, Bwitty NG Ltd is dedicated to walking with you every 
+                step of the way. We don’t just offer services — we deliver excellence, foster 
+                trust, and build lasting relationships.
               </p>
             </div>
           </div>
@@ -56,9 +57,10 @@ const About: React.FC = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Values</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Mission</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              These core principles guide everything we do and every decision we make
+              " To provide reliable services that bring peace of mind while helping 
+              our customers achieve their dreams"
             </p>
           </div>
           
@@ -69,8 +71,7 @@ const About: React.FC = () => {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Quality First</h3>
               <p className="text-gray-600">
-                We source only the finest products and maintain strict quality standards to ensure 
-                every item meets our high expectations.
+                Delivering the best services with consistency and integrity.
               </p>
             </div>
             
@@ -80,8 +81,7 @@ const About: React.FC = () => {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Customer Focus</h3>
               <p className="text-gray-600">
-                Your satisfaction is our priority. We listen to your needs and continuously improve 
-                our products and services based on your feedback.
+                Creating a peaceful experience where customers feel valued, respected, and supported.
               </p>
             </div>
             
@@ -91,8 +91,7 @@ const About: React.FC = () => {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Excellence</h3>
               <p className="text-gray-600">
-                We strive for excellence in every aspect of our business, from product selection 
-                to customer service and delivery.
+                Building a foundation of reliability and trust in every transaction.
               </p>
             </div>
             
@@ -110,7 +109,7 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Product Categories */}
+ {/*      {/* Product Categories }
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -162,7 +161,7 @@ const About: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact Section */}
       <section className="py-16 bg-black text-white">

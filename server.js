@@ -1,13 +1,19 @@
 import express from "express";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
-import Paystack from '@paystack/inline-js';
-const popup = new Paystack()
+import cors from "cors";
+
+
+
 
 dotenv.config();
 const app = express();
 app.use(express.json());
-
+// ✅ Enable CORS
+app.use(cors({
+  origin: "http://localhost:5173", // frontend origin
+  credentials: true,
+}));
 // Initialize payment
 app.post("/api/paystack/init", async (req, res) => {
   const { email, amount } = req.body;
