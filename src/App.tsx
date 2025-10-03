@@ -25,6 +25,7 @@ import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
 import ForgotPassword from './pages/ForgotPassword';
 import ChangePassword from './pages/ChangePassword';
+import ChangeEmail from './pages/ChangeEmail';
 import { Toaster } from './components/Toaster';
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
                     <Route path="/register" element={<UserRegister />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/change-password" element={<ChangePassword />} />
+                    <Route path="/change-email" element={<ChangeEmail />} />
                     <Route path="/account" element={<UserAccount />} />
                     <Route path="/account/orders/:orderId" element={<OrderDetails />} />
                     <Route path="/admin/dashboard" element={<AdminDashboard />} />

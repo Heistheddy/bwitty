@@ -299,6 +299,12 @@ const UserAccount: React.FC = () => {
                     <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Account Actions</h3>
                     <div className="space-y-3">
                       <Link
+                        to="/change-email"
+                        className="block w-full text-left p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm sm:text-base"
+                      >
+                        Change Email
+                      </Link>
+                      <Link
                         to="/change-password"
                         className="block w-full text-left p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm sm:text-base"
                       >
