@@ -19,6 +19,16 @@ export const favoriteService = {
     return data || [];
   },
 
+  async getUserFavoriteIds(userId: string): Promise<string[]> {
+    const { data, error } = await supabase
+      .from('user_favorites')
+      .select('product_id')
+      .eq('user_id', userId);
+
+    if (error) throw error;
+    return (data || []).map(fav => fav.product_id);
+  },
+
   async isFavorite(productId: string, userId: string): Promise<boolean> {
     const { data, error } = await supabase
       .from('user_favorites')
@@ -54,6 +64,16 @@ export const favoriteService = {
       .delete()
       .eq('product_id', productId)
       .eq('user_id', user.id);
+
+    if (error) throw error;
+  },
+
+  async removeFromFavorites(productId: string, userId: string): Promise<void> {
+    const { error } = await supabase
+      .from('user_favorites')
+      .delete()
+      .eq('product_id', productId)
+      .eq('user_id', userId);
 
     if (error) throw error;
   },

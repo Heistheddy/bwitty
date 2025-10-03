@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { User, Package, MapPin, Phone, Mail, Calendar, Eye, Truck } from 'lucide-react';
+import { User, Package, MapPin, Phone, Mail, Calendar, Eye, Truck, Heart } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useOrders } from '../context/OrderContext';
 import { Order } from '../data/orders';
 import ShippingAddressManager from '../components/ShippingAddressManager';
+import FavoritesSection from '../components/FavoritesSection';
 
 const UserAccount: React.FC = () => {
   const { user, isAuthenticated, updateProfile, loading } = useAuth();
   const { getUserOrders } = useOrders();
-  const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'shipping'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'shipping' | 'favorites'>('profile');
   const [orders, setOrders] = useState<Order[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
@@ -131,6 +132,7 @@ const UserAccount: React.FC = () => {
             {[
               { id: 'profile', label: 'Profile', icon: User },
               { id: 'orders', label: 'Orders', icon: Package },
+              { id: 'favorites', label: 'Favorites', icon: Heart },
               { id: 'shipping', label: 'Shipping', icon: MapPin },
             ].map(({ id, label, icon: Icon }) => (
               <button
@@ -480,6 +482,13 @@ const UserAccount: React.FC = () => {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {/* Favorites Tab */}
+        {activeTab === 'favorites' && user && (
+          <div className="bg-white rounded-lg shadow-sm p-8">
+            <FavoritesSection userId={user.id} />
           </div>
         )}
 
