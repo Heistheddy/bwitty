@@ -15,40 +15,71 @@ export const reviewService = {
   async getProductReviews(productId: string): Promise<ProductReview[]> {
     const { data, error } = await supabase
       .from('product_reviews')
-      .select(`
-        *,
-        profiles:user_id (
-          first_name,
-          last_name
-        )
-      `)
+      .select('*')
       .eq('product_id', productId)
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error fetching reviews:', error);
+      throw error;
+    }
 
-    return (data || []).map((review: any) => ({
-      ...review,
-      user_name: review.profiles
-        ? `${review.profiles.first_name || ''} ${review.profiles.last_name || ''}`.trim() || 'Anonymous'
-        : 'Anonymous',
-    }));
+    if (!data || data.length === 0) {
+      return [];
+    }
+
+    const reviewsWithNames = await Promise.all(
+      data.map(async (review: any) => {
+        try {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('first_name, last_name')
+            .eq('id', review.user_id)
+            .single();
+
+          const user_name = profile
+            ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Anonymous'
+            : 'Anonymous';
+
+          return {
+            ...review,
+            user_name,
+          };
+        } catch (err) {
+          console.error('Error fetching profile for review:', err);
+          return {
+            ...review,
+            user_name: 'Anonymous',
+          };
+        }
+      })
+    );
+
+    return reviewsWithNames;
   },
 
   async addReview(productId: string, rating: number, comment: string): Promise<void> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error('User not authenticated');
 
-    const { error } = await supabase
+    console.log('Submitting review:', { productId, userId: user.id, rating, comment });
+
+    const { data, error } = await supabase
       .from('product_reviews')
       .insert({
         product_id: productId,
         user_id: user.id,
         rating,
         comment,
-      });
+      })
+      .select();
 
-    if (error) throw error;
+    if (error) {
+      console.error('Review submission error:', error);
+      throw error;
+    }
+
+    console.log('Review submitted successfully:', data);
   },
 
   async updateReview(reviewId: string, rating: number, comment: string): Promise<void> {

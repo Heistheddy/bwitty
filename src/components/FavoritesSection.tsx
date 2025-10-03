@@ -45,16 +45,21 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
         .select('id, title, price, image, category')
         .in('id', favoriteIds);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching products:', error);
+        throw error;
+      }
 
+      console.log('Loaded favorites:', products);
       setFavorites(products || []);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error loading favorites:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to load favorites',
+        title: 'Error Loading Favorites',
+        description: error.message || 'Failed to load favorites. Please check database permissions.',
         variant: 'destructive',
       });
+      setFavorites([]);
     } finally {
       setLoading(false);
     }
