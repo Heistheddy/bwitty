@@ -31,7 +31,7 @@ const About: React.FC = () => {
                 <img
                   src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600"
                   alt="Founder - Blessing Unuigboje Anderson"
-                  className="w-full h-[400px] object-cover rounded-lg shadow-lg"
+                  className="w-full h-[650px] object-cover rounded-lg shadow-lg"
                 />
                 <p className="text-center text-sm text-gray-500 mt-4 italic">Blessing Unuigboje Anderson - Founder</p>
               </div>
@@ -73,9 +73,9 @@ const About: React.FC = () => {
 
                 <div>
                   <img
-                    src="https://images.pexels.com/photos/6693655/pexels-photo-6693655.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    src="/CAC.jpg"
                     alt="CAC Certificate - Business Registration"
-                    className="w-full h-[400px] object-cover rounded-lg shadow-lg"
+                    className="w-full h-[650px] object-cover rounded-lg shadow-lg"
                   />
                   <p className="text-center text-sm text-gray-500 mt-4 italic">CAC Registration Certificate</p>
                 </div>

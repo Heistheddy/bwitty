@@ -29,9 +29,9 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
             <img
-              src="/WhatsApp Image 2025-10-03 at 19.42.54_272069da.jpg"
+              src="/4.png"
               alt="BWITTY NG LTD Logo"
-              className="h-12 w-auto object-contain"
+              className="h-20 w-auto object-contain"
             />
           </Link>
 

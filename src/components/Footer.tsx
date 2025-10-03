@@ -10,9 +10,9 @@ const Footer: React.FC = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <img
-              src="/WhatsApp Image 2025-10-03 at 19.42.54_272069da.jpg"
+              src="/4.png"
               alt="BWITTY NG LTD Logo"
-              className="h-12 w-auto object-contain"
+              className="h-20 w-auto object-contain"
             />
             <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
               Your trusted source for premium hair products, fashion, gadgets, and household essentials. Quality guaranteed, nationwide delivery.
