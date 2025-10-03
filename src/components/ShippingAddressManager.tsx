@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Plus, Edit2, Trash2, Check } from 'lucide-react';
+import { MapPin, Plus, CreditCard as Edit2, Trash2, Check } from 'lucide-react';
 import { shippingService, ShippingAddress } from '../lib/shipping';
 import { useToast } from '../hooks/use-toast';
 
