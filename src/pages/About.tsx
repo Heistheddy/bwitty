@@ -17,37 +17,69 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Our Story */}
+      {/* Our Story - Founder Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Story</h2>
               <div className="w-16 h-1 bg-pink-500 mx-auto mb-6"></div>
             </div>
-            
-            <div className="prose prose-lg max-w-none">
-              <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-                At Bwitty NG Ltd, we believe that every customer deserves more than just services 
-                — they deserve reliability, peace of mind, and solutions that turn visions into reality. 
-                Founded under the leadership of Blessing Unuigboje Anderson, our company is built on 
-                the core values of trust, professionalism, and a commitment to achieving our customers’ 
-                dreams.
-              </p>
-              
-              <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-                We specialize in providing reliable and seamless business solutions that empower 
-                individuals and organizations to grow and thrive. Our approach is centered on 
-                peace of mind, ensuring that every client feels confident and secure while working 
-                with us.
-              </p>
-              
-              <p className="text-gray-600 text-lg leading-relaxed">
-                Whether you are partnering with us for wholesale services, individualpurchase, 
-                or long-term purchases, Bwitty NG Ltd is dedicated to walking with you every 
-                step of the way. We don’t just offer services — we deliver excellence, foster 
-                trust, and build lasting relationships.
-              </p>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+              <div className="order-2 lg:order-1">
+                <img
+                  src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600"
+                  alt="Founder - Blessing Unuigboje Anderson"
+                  className="w-full h-[400px] object-cover rounded-lg shadow-lg"
+                />
+                <p className="text-center text-sm text-gray-500 mt-4 italic">Blessing Unuigboje Anderson - Founder</p>
+              </div>
+
+              <div className="order-1 lg:order-2">
+                <p className="text-gray-600 mb-6 text-lg leading-relaxed">
+                  At Bwitty NG Ltd, we believe that every customer deserves more than just services
+                  — they deserve reliability, peace of mind, and solutions that turn visions into reality.
+                  Founded under the leadership of Blessing Unuigboje Anderson, our company is built on
+                  the core values of trust, professionalism, and a commitment to achieving our customers'
+                  dreams.
+                </p>
+
+                <p className="text-gray-600 text-lg leading-relaxed">
+                  We specialize in providing reliable and seamless business solutions that empower
+                  individuals and organizations to grow and thrive. Our approach is centered on
+                  peace of mind, ensuring that every client feels confident and secure while working
+                  with us.
+                </p>
+              </div>
+            </div>
+
+            {/* CAC Registration Section */}
+            <div className="bg-gray-50 rounded-lg p-8 shadow-md">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Registered & Verified Business</h3>
+                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                    Whether you are partnering with us for wholesale services, individual purchase,
+                    or long-term purchases, Bwitty NG Ltd is dedicated to walking with you every
+                    step of the way. We don't just offer services — we deliver excellence, foster
+                    trust, and build lasting relationships.
+                  </p>
+                  <p className="text-gray-600 text-lg leading-relaxed">
+                    As a fully registered business with the Corporate Affairs Commission (CAC), we operate
+                    with complete transparency and legal compliance, giving you peace of mind with every transaction.
+                  </p>
+                </div>
+
+                <div>
+                  <img
+                    src="https://images.pexels.com/photos/6693655/pexels-photo-6693655.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="CAC Certificate - Business Registration"
+                    className="w-full h-[400px] object-cover rounded-lg shadow-lg"
+                  />
+                  <p className="text-center text-sm text-gray-500 mt-4 italic">CAC Registration Certificate</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

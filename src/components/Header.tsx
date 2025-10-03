@@ -28,13 +28,11 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
-            <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
-              <span className="text-black font-bold text-sm">B</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-black text-sm sm:text-lg leading-none">BWITTY NG LTD</span>
-              <span className="text-xs text-gray-600">Everything Bwitty</span>
-            </div>
+            <img
+              src="/WhatsApp Image 2025-10-03 at 19.42.54_272069da.jpg"
+              alt="BWITTY NG LTD Logo"
+              className="h-12 w-auto object-contain"
+            />
           </Link>
 
           {/* Desktop Navigation */}

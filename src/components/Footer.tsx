@@ -9,15 +9,11 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
-                <span className="text-black font-bold text-sm">B</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-white text-base sm:text-lg leading-none">BWITTY NG LTD</span>
-                <span className="text-xs text-gray-300">Everything Bwitty</span>
-              </div>
-            </div>
+            <img
+              src="/WhatsApp Image 2025-10-03 at 19.42.54_272069da.jpg"
+              alt="BWITTY NG LTD Logo"
+              className="h-12 w-auto object-contain"
+            />
             <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
               Your trusted source for premium hair products, fashion, gadgets, and household essentials. Quality guaranteed, nationwide delivery.
             </p>
