@@ -105,7 +105,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
             <button
               key={index}
               className={`flex-shrink-0 w-16 h-16 bg-white rounded border-2 overflow-hidden transition-colors ${
-                selectedImage === index ? 'border-yellow-500' : 'border-gray-200 hover:border-gray-300'
+                selectedImage === index ? 'border-pink-500' : 'border-gray-200 hover:border-gray-300'
               }`}
               onClick={() => setSelectedImage(index)}
             >

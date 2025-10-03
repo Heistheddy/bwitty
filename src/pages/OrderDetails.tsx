@@ -29,7 +29,7 @@ const OrderDetails: React.FC = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading order details...</p>
         </div>
       </div>
@@ -45,7 +45,7 @@ const OrderDetails: React.FC = () => {
           <p className="text-gray-600 mb-6">The order you're looking for doesn't exist or you don't have access to it.</p>
           <Link
             to="/account"
-            className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg transition-colors"
+            className="bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-6 rounded-lg transition-colors"
           >
             Back to Account
           </Link>
@@ -77,7 +77,7 @@ const OrderDetails: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending_payment':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-pink-100 text-pink-800';
       case 'processing':
         return 'bg-blue-100 text-blue-800';
       case 'shipped':
@@ -238,7 +238,7 @@ const OrderDetails: React.FC = () => {
               <div className="space-y-4">
                 {order.auditLog.map((entry) => (
                   <div key={entry.id} className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0"></div>
                     <div className="flex-grow">
                       <h3 className="font-semibold text-gray-900">{entry.action}</h3>
                       <p className="text-gray-600 text-sm">{entry.details}</p>
@@ -329,7 +329,7 @@ const OrderDetails: React.FC = () => {
             </div>
 
             {/* Contact Support */}
-            <div className="bg-yellow-50 rounded-lg p-6">
+            <div className="bg-pink-50 rounded-lg p-6">
               <h3 className="font-semibold text-gray-900 mb-2">Need Help?</h3>
               <p className="text-gray-600 text-sm mb-4">
                 Contact our support team if you have any questions about your order.
@@ -346,7 +346,7 @@ const OrderDetails: React.FC = () => {
                 </a>
                 <a
                   href="mailto:bwittyhairs@gmail.com"
-                  className="flex items-center space-x-2 text-yellow-600 hover:text-yellow-700 text-sm"
+                  className="flex items-center space-x-2 text-pink-600 hover:text-pink-700 text-sm"
                 >
                   <Mail className="w-4 h-4" />
                   <span>bwittyhairs@gmail.com</span>

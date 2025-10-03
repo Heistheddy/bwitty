@@ -76,7 +76,7 @@ const ChangePassword: React.FC = () => {
           <p className="text-gray-600 mb-4">You must be logged in to change your password.</p>
           <Link
             to="/login"
-            className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-lg transition-colors"
+            className="bg-pink-500 hover:bg-pink-600 text-black font-bold py-2 px-4 rounded-lg transition-colors"
           >
             Login
           </Link>
@@ -122,7 +122,7 @@ const ChangePassword: React.FC = () => {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
                 <span className="text-black font-bold">B</span>
               </div>
               <div className="flex flex-col">
@@ -158,7 +158,7 @@ const ChangePassword: React.FC = () => {
                   value={formData.currentPassword}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   placeholder="Enter current password"
                 />
                 <button
@@ -183,7 +183,7 @@ const ChangePassword: React.FC = () => {
                   value={formData.newPassword}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   placeholder="Enter new password"
                 />
                 <button
@@ -211,7 +211,7 @@ const ChangePassword: React.FC = () => {
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   placeholder="Confirm new password"
                 />
                 <button
@@ -230,7 +230,7 @@ const ChangePassword: React.FC = () => {
               className={`w-full font-bold py-3 px-4 rounded-lg transition-colors ${
                 isLoading
                   ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                  : 'bg-yellow-500 hover:bg-yellow-600 text-black'
+                  : 'bg-pink-500 hover:bg-pink-600 text-black'
               }`}
             >
               {isLoading ? 'Updating Password...' : 'Update Password'}

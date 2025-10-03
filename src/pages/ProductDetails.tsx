@@ -83,7 +83,7 @@ const ProductDetails: React.FC = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading product...</p>
         </div>
       </div>
@@ -95,7 +95,7 @@ const ProductDetails: React.FC = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
-          <Link to="/shop" className="text-yellow-600 hover:text-yellow-700">
+          <Link to="/shop" className="text-pink-600 hover:text-pink-700">
             Return to Shop
           </Link>
         </div>
@@ -177,7 +177,7 @@ const ProductDetails: React.FC = () => {
                       key={i}
                       className={`w-5 h-5 ${
                         i < Math.floor(4.5) // Default rating
-                          ? 'text-yellow-400 fill-current'
+                          ? 'text-pink-400 fill-current'
                           : 'text-gray-300'
                       }`}
                     />
@@ -240,7 +240,7 @@ const ProductDetails: React.FC = () => {
                 <div className="flex space-x-4">
                   <button
                     onClick={handleAddToCart}
-                    className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
+                    className="flex-1 bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
                   >
                     <ShoppingCart className="w-5 h-5 mr-2" />
                     Add to Cart
@@ -255,14 +255,14 @@ const ProductDetails: React.FC = () => {
             {/* Features */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-gray-200">
               <div className="flex items-center space-x-3">
-                <Truck className="w-5 h-5 text-yellow-500" />
+                <Truck className="w-5 h-5 text-pink-500" />
                 <div>
                   <p className="font-medium text-gray-900">Fast Delivery</p>
                   <p className="text-sm text-gray-600">Nationwide shipping</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <Shield className="w-5 h-5 text-yellow-500" />
+                <Shield className="w-5 h-5 text-pink-500" />
                 <div>
                   <p className="font-medium text-gray-900">Quality Guarantee</p>
                   <p className="text-sm text-gray-600">30-day return policy</p>
@@ -278,7 +278,7 @@ const ProductDetails: React.FC = () => {
           <div className="text-center py-8">
             <Link
               to="/shop"
-              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg transition-colors"
+              className="bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-6 rounded-lg transition-colors"
             >
               Browse All Products
             </Link>

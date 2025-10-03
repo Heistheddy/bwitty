@@ -56,7 +56,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             className={`px-4 py-2 text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors ${
               variant === 'destructive'
                 ? 'bg-red-600 hover:bg-red-700 focus:ring-red-500'
-                : 'bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-500'
+                : 'bg-pink-500 hover:bg-pink-600 focus:ring-pink-500'
             }`}
           >
             {confirmText}

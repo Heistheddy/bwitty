@@ -37,7 +37,7 @@ const Home: React.FC = () => {
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Welcome to <span className="text-yellow-400">BWITTY NG LTD</span>
+              Welcome to <span className="text-pink-400">BWITTY NG LTD</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200">
               Everything Bwitty - Your Trusted Source for Premium Hair Products, Fashion & More
@@ -45,7 +45,7 @@ const Home: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
                 to="/shop"
-                className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-4 px-8 rounded-lg transition-colors flex items-center"
+                className="bg-pink-500 hover:bg-pink-600 text-black font-bold py-4 px-8 rounded-lg transition-colors flex items-center"
               >
                 Shop Now <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
                 href="https://wa.me/2348023170466"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold py-4 px-8 rounded-lg transition-colors flex items-center"
+                className="border-2 border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-black font-bold py-4 px-8 rounded-lg transition-colors flex items-center"
               >
                 <Phone className="mr-2 w-5 h-5" />
                 WhatsApp Us
@@ -68,21 +68,21 @@ const Home: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="bg-yellow-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-pink-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Truck className="w-8 h-8 text-black" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Fast Delivery</h3>
               <p className="text-gray-600">Nationwide delivery with multiple shipping options including UPS, FedEx, DHL</p>
             </div>
             <div className="text-center">
-              <div className="bg-yellow-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-pink-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="w-8 h-8 text-black" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Quality Guarantee</h3>
               <p className="text-gray-600">Premium products with comprehensive return and refund policy</p>
             </div>
             <div className="text-center">
-              <div className="bg-yellow-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-pink-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="w-8 h-8 text-black" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Customer Satisfaction</h3>
@@ -141,7 +141,7 @@ const Home: React.FC = () => {
             </a>
             <a
               href="mailto:bwittyhairs@gmail.com"
-              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg transition-colors"
+              className="bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-6 rounded-lg transition-colors"
             >
               Email: bwittyhairs@gmail.com
             </a>

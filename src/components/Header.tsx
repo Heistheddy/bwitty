@@ -28,7 +28,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
-            <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
               <span className="text-black font-bold text-sm">B</span>
             </div>
             <div className="flex flex-col">
@@ -45,8 +45,8 @@ const Header: React.FC = () => {
                 to={item.path}
                 className={`font-medium transition-colors ${
                   isActive(item.path)
-                    ? 'text-yellow-500'
-                    : 'text-black hover:text-yellow-500'
+                    ? 'text-pink-500'
+                    : 'text-black hover:text-pink-500'
                 }`}
               >
                 {item.name}
@@ -60,7 +60,7 @@ const Header: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="text-black hover:text-yellow-500 transition-colors"
+                className="text-black hover:text-pink-500 transition-colors"
               >
                 <User className="w-5 h-5" />
               </button>
@@ -136,12 +136,12 @@ const Header: React.FC = () => {
             
             <Link
               to="/cart"
-              className="relative text-black hover:text-yellow-500 transition-colors"
+              className="relative text-black hover:text-pink-500 transition-colors"
             >
               <>
                 <ShoppingCart className="w-5 h-5" />
                 {state.itemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-yellow-500 text-black text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 bg-pink-500 text-black text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
                     {state.itemCount}
                   </span>
                 )}
@@ -153,11 +153,11 @@ const Header: React.FC = () => {
           <div className="flex items-center space-x-4 sm:hidden">
             <Link
               to="/cart"
-              className="relative text-black hover:text-yellow-500 transition-colors"
+              className="relative text-black hover:text-pink-500 transition-colors"
             >
               <ShoppingCart className="w-5 h-5" />
               {state.itemCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-yellow-500 text-black text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-pink-500 text-black text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
                   {state.itemCount}
                 </span>
               )}
@@ -181,8 +181,8 @@ const Header: React.FC = () => {
                   to={item.path}
                   className={`font-medium transition-colors ${
                     isActive(item.path)
-                      ? 'text-yellow-500'
-                      : 'text-black hover:text-yellow-500'
+                      ? 'text-pink-500'
+                      : 'text-black hover:text-pink-500'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -198,7 +198,7 @@ const Header: React.FC = () => {
                     {isAdmin && (
                       <Link
                         to="/admin/dashboard"
-                        className="block text-black hover:text-yellow-500 transition-colors"
+                        className="block text-black hover:text-pink-500 transition-colors"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Admin Dashboard
@@ -207,7 +207,7 @@ const Header: React.FC = () => {
                     {!isAdmin && (
                       <Link
                         to="/account"
-                        className="block text-black hover:text-yellow-500 transition-colors"
+                        className="block text-black hover:text-pink-500 transition-colors"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         My Account
@@ -215,7 +215,7 @@ const Header: React.FC = () => {
                     )}
                     <Link
                       to="/change-password"
-                      className="block text-black hover:text-yellow-500 transition-colors"
+                      className="block text-black hover:text-pink-500 transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Change Password
@@ -234,14 +234,14 @@ const Header: React.FC = () => {
                   <div className="space-y-2">
                     <Link
                       to="/login"
-                      className="block text-black hover:text-yellow-500 transition-colors"
+                      className="block text-black hover:text-pink-500 transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Sign In
                     </Link>
                     <Link
                       to="/register"
-                      className="block text-black hover:text-yellow-500 transition-colors"
+                      className="block text-black hover:text-pink-500 transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Create Account

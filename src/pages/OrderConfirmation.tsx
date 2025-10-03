@@ -38,7 +38,7 @@ const OrderConfirmation: React.FC = () => {
               </div>
               <div>
                 <span className="text-gray-600">Delivery Status:</span>
-                <p className="font-semibold text-yellow-600">Processing</p>
+                <p className="font-semibold text-pink-600">Processing</p>
               </div>
             </div>
           </div>
@@ -48,7 +48,7 @@ const OrderConfirmation: React.FC = () => {
             <h2 className="text-xl font-bold text-gray-900 mb-6">What's Next?</h2>
             <div className="space-y-4">
               <div className="flex items-start space-x-4">
-                <Package className="w-6 h-6 text-yellow-500 mt-1 flex-shrink-0" />
+                <Package className="w-6 h-6 text-pink-500 mt-1 flex-shrink-0" />
                 <div className="text-left">
                   <h3 className="font-semibold text-gray-900">Order Processing</h3>
                   <p className="text-gray-600 text-sm">
@@ -57,7 +57,7 @@ const OrderConfirmation: React.FC = () => {
                 </div>
               </div>
               <div className="flex items-start space-x-4">
-                <Truck className="w-6 h-6 text-yellow-500 mt-1 flex-shrink-0" />
+                <Truck className="w-6 h-6 text-pink-500 mt-1 flex-shrink-0" />
                 <div className="text-left">
                   <h3 className="font-semibold text-gray-900">Shipping</h3>
                   <p className="text-gray-600 text-sm">
@@ -66,7 +66,7 @@ const OrderConfirmation: React.FC = () => {
                 </div>
               </div>
               <div className="flex items-start space-x-4">
-                <CheckCircle className="w-6 h-6 text-yellow-500 mt-1 flex-shrink-0" />
+                <CheckCircle className="w-6 h-6 text-pink-500 mt-1 flex-shrink-0" />
                 <div className="text-left">
                   <h3 className="font-semibold text-gray-900">Delivery</h3>
                   <p className="text-gray-600 text-sm">
@@ -78,7 +78,7 @@ const OrderConfirmation: React.FC = () => {
           </div>
 
           {/* Contact Information */}
-          <div className="bg-yellow-50 rounded-lg p-6 mb-8">
+          <div className="bg-pink-50 rounded-lg p-6 mb-8">
             <h2 className="text-lg font-bold text-gray-900 mb-4">Need Help?</h2>
             <p className="text-gray-600 text-sm mb-4">
               If you have any questions about your order, don't hesitate to contact us:
@@ -95,7 +95,7 @@ const OrderConfirmation: React.FC = () => {
               </a>
               <a
                 href="mailto:bwittyhairs@gmail.com"
-                className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-black font-medium py-2 px-4 rounded-lg transition-colors"
+                className="inline-flex items-center justify-center bg-pink-500 hover:bg-pink-600 text-black font-medium py-2 px-4 rounded-lg transition-colors"
               >
                 Email: bwittyhairs@gmail.com
               </a>
@@ -106,7 +106,7 @@ const OrderConfirmation: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/shop"
-              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg transition-colors"
+              className="bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-6 rounded-lg transition-colors"
             >
               Continue Shopping
             </Link>

@@ -273,7 +273,7 @@ const Checkout: React.FC = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">No items to checkout</h1>
-          <Link to="/shop" className="text-yellow-600 hover:text-yellow-700">
+          <Link to="/shop" className="text-pink-600 hover:text-pink-700">
             Return to Shop
           </Link>
         </div>
@@ -313,7 +313,7 @@ const Checkout: React.FC = () => {
                     value={formData.firstName}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   />
                 </div>
                 <div>
@@ -326,7 +326,7 @@ const Checkout: React.FC = () => {
                     value={formData.lastName}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   />
                 </div>
                 <div className="sm:col-span-2">
@@ -339,7 +339,7 @@ const Checkout: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   />
                 </div>
                 <div className="sm:col-span-2">
@@ -352,7 +352,7 @@ const Checkout: React.FC = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     placeholder="08023170466"
                   />
                 </div>
@@ -373,7 +373,7 @@ const Checkout: React.FC = () => {
                     value={formData.address}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -387,7 +387,7 @@ const Checkout: React.FC = () => {
                       value={formData.city}
                       onChange={handleInputChange}
                       required
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     />
                   </div>
                   <div>
@@ -400,7 +400,7 @@ const Checkout: React.FC = () => {
                       value={formData.state}
                       onChange={handleInputChange}
                       required
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -414,7 +414,7 @@ const Checkout: React.FC = () => {
                       name="postalCode"
                       value={formData.postalCode}
                       onChange={handleInputChange}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     />
                   </div>
                   <div>
@@ -425,7 +425,7 @@ const Checkout: React.FC = () => {
                       name="country"
                       value={formData.country}
                       onChange={handleInputChange}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     >
                       <option value="Nigeria">Nigeria</option>
                       <option value="Ghana">Ghana</option>
@@ -444,14 +444,14 @@ const Checkout: React.FC = () => {
               <h2 className="text-xl font-bold text-gray-900 mb-4">Shipping Method</h2>
               <div className="space-y-3">
                 {Object.entries(shippingOptions).map(([key, option]) => (
-                  <label key={key} className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-yellow-500 transition-colors cursor-pointer">
+                  <label key={key} className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-pink-500 transition-colors cursor-pointer">
                     <input
                       type="radio"
                       name="shipping"
                       value={key}
                       checked={shippingMethod === key}
                       onChange={(e) => setShippingMethod(e.target.value)}
-                      className="text-yellow-500"
+                      className="text-pink-500"
                     />
                     <div className="ml-3 flex-grow">
                       <div className="flex justify-between">
@@ -468,14 +468,14 @@ const Checkout: React.FC = () => {
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Payment Method</h2>
               <div className="space-y-3">
-                <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-yellow-500 transition-colors cursor-pointer">
+                <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-pink-500 transition-colors cursor-pointer">
                   <input
                     type="radio"
                     name="payment"
                     value="paystack"
                     checked={paymentMethod === 'paystack'}
                     onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="text-yellow-500"
+                    className="text-pink-500"
                   />
                   <CreditCard className="ml-3 w-5 h-5 text-gray-500" />
                   <div className="ml-3 flex-grow">
@@ -487,14 +487,14 @@ const Checkout: React.FC = () => {
                   </div>
                 </label>
 
-              {/*   <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-yellow-500 transition-colors cursor-pointer">
+              {/*   <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-pink-500 transition-colors cursor-pointer">
                   <input
                     type="radio"
                     name="payment"
                     value="bank-transfer"
                     checked={paymentMethod === 'bank-transfer'}
                     onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="text-yellow-500"
+                    className="text-pink-500"
                   />
                   <Building2 className="ml-3 w-5 h-5 text-gray-500" />
                   <div className="ml-3">
@@ -554,7 +554,7 @@ const Checkout: React.FC = () => {
                   className={`w-full font-bold py-3 px-4 rounded-lg transition-colors ${
                     isProcessing
                       ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                      : 'bg-yellow-500 hover:bg-yellow-600 text-black'
+                      : 'bg-pink-500 hover:bg-pink-600 text-black'
                   }`}
                 >
                   {isProcessing ? 'Processing...' : `Complete Order - ${formatPrice(total)}`}

@@ -55,7 +55,7 @@ const UserLogin: React.FC = () => {
           {/* Logo */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
                 <span className="text-black font-bold">B</span>
               </div>
               <div className="flex flex-col">
@@ -88,7 +88,7 @@ const UserLogin: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   placeholder="your@email.com"
                 />
               </div>
@@ -105,7 +105,7 @@ const UserLogin: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   placeholder="Enter your password"
                 />
                 <button
@@ -124,7 +124,7 @@ const UserLogin: React.FC = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-yellow-600 focus:ring-yellow-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                   Remember me
@@ -134,7 +134,7 @@ const UserLogin: React.FC = () => {
               <div className="text-sm">
                 <Link
                   to="/forgot-password"
-                  className="font-medium text-yellow-600 hover:text-yellow-500"
+                  className="font-medium text-pink-600 hover:text-pink-500"
                 >
                   Forgot your password?
                 </Link>
@@ -147,7 +147,7 @@ const UserLogin: React.FC = () => {
               className={`w-full font-bold py-3 px-4 rounded-lg transition-colors ${
                 isLoading
                   ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                  : 'bg-yellow-500 hover:bg-yellow-600 text-black'
+                  : 'bg-pink-500 hover:bg-pink-600 text-black'
               }`}
             >
               {isLoading ? 'Signing in...' : 'Sign In'}
@@ -160,7 +160,7 @@ const UserLogin: React.FC = () => {
               Don't have an account?{' '}
               <Link
                 to="/register"
-                className="font-medium text-yellow-600 hover:text-yellow-500"
+                className="font-medium text-pink-600 hover:text-pink-500"
               >
                 Create one here
               </Link>

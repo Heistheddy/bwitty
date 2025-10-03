@@ -99,7 +99,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
       
       <div className="p-4">
         <Link to={`/product/${product.id}`}>
-          <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors line-clamp-2">
+          <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-pink-600 transition-colors line-clamp-2">
             {product.title}
           </h3>
         </Link>
@@ -111,7 +111,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
                 key={i}
                 className={`w-4 h-4 ${
                   i < Math.floor(product.rating)
-                    ? 'text-yellow-400 fill-current'
+                    ? 'text-pink-400 fill-current'
                     : 'text-gray-300'
                 }`}
               />

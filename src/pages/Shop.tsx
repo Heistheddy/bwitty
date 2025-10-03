@@ -137,7 +137,7 @@ const Shop: React.FC = () => {
         {/* Products Grid */}
         {loading ? (
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
           </div>
         ) : visibleProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -169,7 +169,7 @@ const Shop: React.FC = () => {
             </p>
             <button
               onClick={() => setSearchTerm('')}
-              className="bg-yellow-500 hover:bg-yellow-600 text-black font-medium py-2 px-4 rounded-lg transition-colors"
+              className="bg-pink-500 hover:bg-pink-600 text-black font-medium py-2 px-4 rounded-lg transition-colors"
             >
               Clear Search
             </button>

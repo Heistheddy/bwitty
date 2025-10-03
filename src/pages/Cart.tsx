@@ -47,7 +47,7 @@ const Cart: React.FC = () => {
           </p>
           <Link
             to="/shop"
-            className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg transition-colors inline-flex items-center"
+            className="bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-6 rounded-lg transition-colors inline-flex items-center"
           >
             Continue Shopping
             <ArrowRight className="ml-2 w-5 h-5" />
@@ -121,7 +121,7 @@ const Cart: React.FC = () => {
             <div className="pt-4">
               <Link
                 to="/shop"
-                className="text-yellow-600 hover:text-yellow-700 font-medium inline-flex items-center"
+                className="text-pink-600 hover:text-pink-700 font-medium inline-flex items-center"
               >
                 <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
                 Continue Shopping
@@ -153,7 +153,7 @@ const Cart: React.FC = () => {
               <div className="space-y-3">
                 <Link
                   to="/checkout"
-                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-4 rounded-lg transition-colors text-center block"
+                  className="w-full bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-4 rounded-lg transition-colors text-center block"
                 >
                   Proceed to Checkout
                 </Link>

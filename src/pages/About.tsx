@@ -8,7 +8,7 @@ const About: React.FC = () => {
       <section className="bg-gradient-to-r from-black via-gray-900 to-black text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            About <span className="text-yellow-400">BWITTY NG LTD</span>
+            About <span className="text-pink-400">BWITTY NG LTD</span>
           </h1>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto">
             Your trusted partner for premium hair products and more. 
@@ -23,7 +23,7 @@ const About: React.FC = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Story</h2>
-              <div className="w-16 h-1 bg-yellow-500 mx-auto mb-6"></div>
+              <div className="w-16 h-1 bg-pink-500 mx-auto mb-6"></div>
             </div>
             
             <div className="prose prose-lg max-w-none">
@@ -66,7 +66,7 @@ const About: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="bg-yellow-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-pink-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Heart className="w-8 h-8 text-black" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Quality First</h3>
@@ -76,7 +76,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center">
-              <div className="bg-yellow-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-pink-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-black" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Customer Focus</h3>
@@ -86,7 +86,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center">
-              <div className="bg-yellow-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-pink-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="w-8 h-8 text-black" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Excellence</h3>
@@ -96,7 +96,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center">
-              <div className="bg-yellow-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-pink-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="w-8 h-8 text-black" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Trust</h3>
@@ -175,7 +175,7 @@ const About: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               <div>
-                <h3 className="text-xl font-semibold text-yellow-400 mb-3">Visit Our Store</h3>
+                <h3 className="text-xl font-semibold text-pink-400 mb-3">Visit Our Store</h3>
                 <p className="text-gray-300 text-sm">
                   Dr Efosa Osayamwen Close<br />
                   Cedar Estate, Therra Peace Estate
@@ -183,7 +183,7 @@ const About: React.FC = () => {
               </div>
               
               <div>
-                <h3 className="text-xl font-semibold text-yellow-400 mb-3">Contact Us</h3>
+                <h3 className="text-xl font-semibold text-pink-400 mb-3">Contact Us</h3>
                 <p className="text-gray-300 text-sm mb-2">
                   Phone/WhatsApp: 08023170466
                 </p>
@@ -193,13 +193,13 @@ const About: React.FC = () => {
               </div>
               
               <div>
-                <h3 className="text-xl font-semibold text-yellow-400 mb-3">Follow Us</h3>
+                <h3 className="text-xl font-semibold text-pink-400 mb-3">Follow Us</h3>
                 <div className="flex justify-center space-x-4">
                   <a
                     href="https://www.instagram.com/bwittyhairs?igsh=aDZlamJicXdhOHh0"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-yellow-400 transition-colors"
+                    className="text-gray-300 hover:text-pink-400 transition-colors"
                   >
                     <Instagram className="w-6 h-6" />
                   </a>
@@ -207,7 +207,7 @@ const About: React.FC = () => {
                     href="https://www.tiktok.com/@bwittyhairs?_t=ZS-8yzsgTBd36l&_r=1"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-yellow-400 transition-colors"
+                    className="text-gray-300 hover:text-pink-400 transition-colors"
                   >
                     <div className="w-6 h-6 bg-current rounded"></div>
                   </a>
@@ -227,7 +227,7 @@ const About: React.FC = () => {
               </a>
               <a
                 href="mailto:bwittyhairs@gmail.com"
-                className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg transition-colors"
+                className="bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-6 rounded-lg transition-colors"
               >
                 Send Email
               </a>

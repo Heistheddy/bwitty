@@ -102,7 +102,7 @@ const AdminDashboard: React.FC = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
         </div>
       </div>
@@ -343,7 +343,7 @@ const AdminDashboard: React.FC = () => {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 sm:py-6 space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-2 sm:space-x-4">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
                   <span className="text-black font-bold text-sm">B</span>
                 </div>
                 <div className="flex flex-col">
@@ -377,7 +377,7 @@ const AdminDashboard: React.FC = () => {
                 onClick={() => setActiveTab(id as any)}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base ${
                   activeTab === id
-                    ? 'bg-yellow-500 text-black'
+                    ? 'bg-pink-500 text-black'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
@@ -418,7 +418,7 @@ const AdminDashboard: React.FC = () => {
                 
                 <div className="bg-white rounded-lg shadow-sm p-6">
                   <div className="flex items-center">
-                    <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-600" />
+                    <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-pink-600" />
                     <div className="ml-4">
                       <p className="text-xs sm:text-sm font-medium text-gray-600">Total Revenue</p>
                       <p className="text-lg sm:text-2xl font-bold text-gray-900">
@@ -487,7 +487,7 @@ const AdminDashboard: React.FC = () => {
                         <td className="px-3 sm:px-6 py-4 whitespace-nowrap hidden md:table-cell">
                           <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                             order.payment.status === 'paid' ? 'bg-green-100 text-green-800' :
-                            order.payment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            order.payment.status === 'pending' ? 'bg-pink-100 text-pink-800' :
                             order.payment.status === 'failed' ? 'bg-red-100 text-red-800' :
                             'bg-blue-100 text-blue-800'
                           }`}>
@@ -496,7 +496,7 @@ const AdminDashboard: React.FC = () => {
                         </td>
                         <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
                           <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            order.status === 'pending_payment' ? 'bg-yellow-100 text-yellow-800' :
+                            order.status === 'pending_payment' ? 'bg-pink-100 text-pink-800' :
                             order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
                             order.status === 'shipped' ? 'bg-purple-100 text-purple-800' :
                             order.status === 'delivered' ? 'bg-green-100 text-green-800' :
@@ -525,14 +525,14 @@ const AdminDashboard: React.FC = () => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
                 <button
                   onClick={() => setShowAddForm(true)}
-                  className="flex items-center space-x-2 bg-yellow-500 hover:bg-yellow-600 text-black font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base w-full sm:w-auto justify-center sm:justify-start"
+                  className="flex items-center space-x-2 bg-pink-500 hover:bg-pink-600 text-black font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base w-full sm:w-auto justify-center sm:justify-start"
                 >
                   <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Add Product</span>
                 </button>
                 <Link
                   to="/change-password"
-                  className="flex items-center space-x-2 text-gray-600 hover:text-yellow-600 transition-colors text-sm sm:text-base"
+                  className="flex items-center space-x-2 text-gray-600 hover:text-pink-600 transition-colors text-sm sm:text-base"
                 >
                   <span>Change Password</span>
                 </Link>
@@ -548,7 +548,7 @@ const AdminDashboard: React.FC = () => {
                   placeholder="Search products..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm sm:text-base"
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-sm sm:text-base"
                 />
               </div>
               
@@ -557,7 +557,7 @@ const AdminDashboard: React.FC = () => {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
-                  className="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                 >
                   <option value="created_at">Date Created</option>
                   <option value="name">Name</option>
@@ -578,7 +578,7 @@ const AdminDashboard: React.FC = () => {
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
               {productsLoading ? (
                 <div className="p-8 text-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500 mx-auto mb-4"></div>
                   <p className="text-gray-600">Loading products...</p>
                 </div>
               ) : (
@@ -644,7 +644,7 @@ const AdminDashboard: React.FC = () => {
                           <div className="flex space-x-2">
                           <button
                             onClick={() => handleEditProduct(product)}
-                            className="text-yellow-600 hover:text-yellow-900"
+                            className="text-pink-600 hover:text-pink-900"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
@@ -713,7 +713,7 @@ const AdminDashboard: React.FC = () => {
                               setSelectedOrder(order);
                               setShowOrderDetails(true);
                             }}
-                            className="text-yellow-600 hover:text-yellow-700 font-medium"
+                            className="text-pink-600 hover:text-pink-700 font-medium"
                           >
                             {order.orderNo}
                           </button>
@@ -730,7 +730,7 @@ const AdminDashboard: React.FC = () => {
                         <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-900 hidden md:table-cell">
                           <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                             order.payment.status === 'paid' ? 'bg-green-100 text-green-800' :
-                            order.payment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            order.payment.status === 'pending' ? 'bg-pink-100 text-pink-800' :
                             order.payment.status === 'failed' ? 'bg-red-100 text-red-800' :
                             'bg-blue-100 text-blue-800'
                           }`}>
@@ -760,7 +760,7 @@ const AdminDashboard: React.FC = () => {
                               setSelectedOrder(order);
                               setShowOrderDetails(true);
                             }}
-                            className="text-yellow-600 hover:text-yellow-900"
+                            className="text-pink-600 hover:text-pink-900"
                           >
                             View
                           </button>
@@ -1187,7 +1187,7 @@ const ProductForm: React.FC<{
           className={`flex-1 font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base ${
             isSubmitting
               ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-              : 'bg-yellow-500 hover:bg-yellow-600 text-black'
+              : 'bg-pink-500 hover:bg-pink-600 text-black'
           }`}
         >
           {isSubmitting ? 'Saving...' : (product ? 'Update' : 'Add')} Product

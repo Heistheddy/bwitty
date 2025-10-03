@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
                 <span className="text-black font-bold text-sm">B</span>
               </div>
               <div className="flex flex-col">
@@ -25,25 +25,25 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-base sm:text-lg font-semibold text-yellow-400">Quick Links</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-pink-400">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-300 hover:text-yellow-400 transition-colors text-xs sm:text-sm">
+                <Link to="/" className="text-gray-300 hover:text-pink-400 transition-colors text-xs sm:text-sm">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/shop" className="text-gray-300 hover:text-yellow-400 transition-colors text-xs sm:text-sm">
+                <Link to="/shop" className="text-gray-300 hover:text-pink-400 transition-colors text-xs sm:text-sm">
                   Shop
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-300 hover:text-yellow-400 transition-colors text-xs sm:text-sm">
+                <Link to="/about" className="text-gray-300 hover:text-pink-400 transition-colors text-xs sm:text-sm">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/policies" className="text-gray-300 hover:text-yellow-400 transition-colors text-xs sm:text-sm">
+                <Link to="/policies" className="text-gray-300 hover:text-pink-400 transition-colors text-xs sm:text-sm">
                   Return Policy
                 </Link>
               </li>
@@ -52,25 +52,25 @@ const Footer: React.FC = () => {
 
           {/* {/* Categories }
           <div className="space-y-4">
-            <h3 className="text-base sm:text-lg font-semibold text-yellow-400">Shop Categories</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-pink-400">Shop Categories</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/shop/hair-products" className="text-gray-300 hover:text-yellow-400 transition-colors text-xs sm:text-sm">
+                <Link to="/shop/hair-products" className="text-gray-300 hover:text-pink-400 transition-colors text-xs sm:text-sm">
                   Hair Products
                 </Link>
               </li>
               <li>
-                <Link to="/shop/clothing" className="text-gray-300 hover:text-yellow-400 transition-colors text-xs sm:text-sm">
+                <Link to="/shop/clothing" className="text-gray-300 hover:text-pink-400 transition-colors text-xs sm:text-sm">
                   Clothing
                 </Link>
               </li>
               <li>
-                <Link to="/shop/gadgets" className="text-gray-300 hover:text-yellow-400 transition-colors text-xs sm:text-sm">
+                <Link to="/shop/gadgets" className="text-gray-300 hover:text-pink-400 transition-colors text-xs sm:text-sm">
                   Gadgets & Electronics
                 </Link>
               </li>
               <li>
-                <Link to="/shop/household" className="text-gray-300 hover:text-yellow-400 transition-colors text-xs sm:text-sm">
+                <Link to="/shop/household" className="text-gray-300 hover:text-pink-400 transition-colors text-xs sm:text-sm">
                   Household Items
                 </Link>
               </li>
@@ -79,10 +79,10 @@ const Footer: React.FC = () => {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className="text-base sm:text-lg font-semibold text-yellow-400">Contact Us</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-pink-400">Contact Us</h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
-                <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 mt-1 flex-shrink-0" />
+                <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-pink-400 mt-1 flex-shrink-0" />
                 <div>
                   <p className="text-gray-300 text-xs sm:text-sm">
                     Dr Efosa Osayamwen Close,<br />
@@ -91,14 +91,14 @@ const Footer: React.FC = () => {
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 flex-shrink-0" />
+                <Phone className="w-3 h-3 sm:w-4 sm:h-4 text-pink-400 flex-shrink-0" />
                 <div>
                   <p className="text-gray-300 text-xs sm:text-sm">08023170466</p>
                   <p className="text-xs text-gray-400">WhatsApp Available</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 flex-shrink-0" />
+                <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-pink-400 flex-shrink-0" />
                 <p className="text-gray-300 text-xs sm:text-sm">bwittyhairs@gmail.com</p>
               </div>
             </div>
@@ -116,7 +116,7 @@ const Footer: React.FC = () => {
                 href="https://www.instagram.com/bwittyhairs?igsh=aDZlamJicXdhOHh0"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-yellow-400 transition-colors"
+                className="text-gray-300 hover:text-pink-400 transition-colors"
               >
                 <Instagram className="w-4 h-4 sm:w-5 sm:h-5" />
               </a>
@@ -124,7 +124,7 @@ const Footer: React.FC = () => {
                 href="https://www.tiktok.com/@bwittyhairs?_t=ZS-8yzsgTBd36l&_r=1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-yellow-400 transition-colors"
+                className="text-gray-300 hover:text-pink-400 transition-colors"
               >
                 <div className="w-4 h-4 sm:w-5 sm:h-5 bg-current rounded-sm"></div>
               </a>
@@ -147,7 +147,7 @@ const Footer: React.FC = () => {
           <div className="mt-6 pt-6 border-t border-gray-800 text-center">
             <p className="text-gray-400 text-xs sm:text-sm">
               &copy; 2025 BWITTY NG LTD. All rights reserved. | 
-              <Link to="/policies" className="hover:text-yellow-400 transition-colors ml-1">
+              <Link to="/policies" className="hover:text-pink-400 transition-colors ml-1">
                 Return & Refund Policy
               </Link>
             </p>

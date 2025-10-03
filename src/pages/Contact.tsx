@@ -59,7 +59,7 @@ const Contact: React.FC = () => {
             {/* Contact Details */}
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-500 p-3 rounded-lg">
+                <div className="bg-pink-500 p-3 rounded-lg">
                   <MapPin className="w-6 h-6 text-black" />
                 </div>
                 <div>
@@ -72,7 +72,7 @@ const Contact: React.FC = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-500 p-3 rounded-lg">
+                <div className="bg-pink-500 p-3 rounded-lg">
                   <Phone className="w-6 h-6 text-black" />
                 </div>
                 <div>
@@ -90,7 +90,7 @@ const Contact: React.FC = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-500 p-3 rounded-lg">
+                <div className="bg-pink-500 p-3 rounded-lg">
                   <Mail className="w-6 h-6 text-black" />
                 </div>
                 <div>
@@ -103,7 +103,7 @@ const Contact: React.FC = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-500 p-3 rounded-lg">
+                <div className="bg-pink-500 p-3 rounded-lg">
                   <Clock className="w-6 h-6 text-black" />
                 </div>
                 <div>
@@ -141,7 +141,7 @@ const Contact: React.FC = () => {
             </div>
 
             {/* Bank Details */}
-            <div className="bg-yellow-50 p-6 rounded-lg">
+            <div className="bg-pink-50 p-6 rounded-lg">
               <h3 className="font-semibold text-gray-900 mb-3">Bank Details</h3>
               <div className="text-sm text-gray-700">
                 <p className="mb-1"><strong>Bank:</strong> OPay</p>
@@ -190,7 +190,7 @@ const Contact: React.FC = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   />
                 </div>
                 <div>
@@ -202,7 +202,7 @@ const Contact: React.FC = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     placeholder="08023170466"
                   />
                 </div>
@@ -218,7 +218,7 @@ const Contact: React.FC = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                 />
               </div>
 
@@ -231,7 +231,7 @@ const Contact: React.FC = () => {
                   value={formData.subject}
                   onChange={handleInputChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                 >
                   <option value="">Select a subject</option>
                   <option value="product-inquiry">Product Inquiry</option>
@@ -254,7 +254,7 @@ const Contact: React.FC = () => {
                   onChange={handleInputChange}
                   required
                   rows={5}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-none"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-none"
                   placeholder="Please provide as much detail as possible..."
                 />
               </div>
@@ -265,7 +265,7 @@ const Contact: React.FC = () => {
                 className={`w-full font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center ${
                   isSubmitting
                     ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                    : 'bg-yellow-500 hover:bg-yellow-600 text-black'
+                    : 'bg-pink-500 hover:bg-pink-600 text-black'
                 }`}
               >
                 {isSubmitting ? (

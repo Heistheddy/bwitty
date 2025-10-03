@@ -19,7 +19,7 @@ const Policies: React.FC = () => {
           {/* Policy Overview */}
           <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
             <div className="flex items-start space-x-4 mb-6">
-              <Shield className="w-8 h-8 text-yellow-500 mt-1" />
+              <Shield className="w-8 h-8 text-pink-500 mt-1" />
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Policy Overview</h2>
                 <p className="text-gray-600">
@@ -31,8 +31,8 @@ const Policies: React.FC = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                <Clock className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
+              <div className="text-center p-4 bg-pink-50 rounded-lg">
+                <Clock className="w-8 h-8 text-pink-500 mx-auto mb-2" />
                 <h3 className="font-semibold text-gray-900">7-Day Window</h3>
                 <p className="text-sm text-gray-600">Return items within 7 days of delivery</p>
               </div>
@@ -124,7 +124,7 @@ const Policies: React.FC = () => {
             
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-500 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="bg-pink-500 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
                   1
                 </div>
                 <div>
@@ -141,7 +141,7 @@ const Policies: React.FC = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-500 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="bg-pink-500 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
                   2
                 </div>
                 <div>
@@ -154,7 +154,7 @@ const Policies: React.FC = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-500 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="bg-pink-500 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
                   3
                 </div>
                 <div>
@@ -167,7 +167,7 @@ const Policies: React.FC = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-500 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="bg-pink-500 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
                   4
                 </div>
                 <div>
@@ -180,7 +180,7 @@ const Policies: React.FC = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-500 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="bg-pink-500 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
                   5
                 </div>
                 <div>
@@ -203,19 +203,19 @@ const Policies: React.FC = () => {
                 <h3 className="font-semibold text-gray-900 mb-3">Refund Timeline</h3>
                 <ul className="space-y-2 text-gray-600">
                   <li className="flex items-start">
-                    <span className="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                    <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                     <strong>Processing:</strong> 2-3 business days after we receive your return
                   </li>
                   <li className="flex items-start">
-                    <span className="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                    <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                     <strong>Bank Transfer:</strong> 1-2 business days
                   </li>
                   <li className="flex items-start">
-                    <span className="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                    <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                     <strong>Credit Card:</strong> 3-5 business days
                   </li>
                   <li className="flex items-start">
-                    <span className="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                    <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                     <strong>Mobile Money:</strong> 1-3 business days
                   </li>
                 </ul>
@@ -253,15 +253,15 @@ const Policies: React.FC = () => {
             </p>
             <ol className="space-y-2 text-gray-600 ml-4">
               <li className="flex items-start">
-                <span className="font-bold text-yellow-500 mr-3">1.</span>
+                <span className="font-bold text-pink-500 mr-3">1.</span>
                 Return your original item following our return process
               </li>
               <li className="flex items-start">
-                <span className="font-bold text-yellow-500 mr-3">2.</span>
+                <span className="font-bold text-pink-500 mr-3">2.</span>
                 Place a new order for the item you prefer
               </li>
               <li className="flex items-start">
-                <span className="font-bold text-yellow-500 mr-3">3.</span>
+                <span className="font-bold text-pink-500 mr-3">3.</span>
                 We'll process your refund once the returned item is received
               </li>
             </ol>
@@ -288,7 +288,7 @@ const Policies: React.FC = () => {
           </div>
 
           {/* Contact Information */}
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-8">
+          <div className="bg-pink-50 border border-pink-200 rounded-lg p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Questions About Returns?</h2>
             <p className="text-gray-700 mb-4">
               Our customer service team is here to help with any questions about returns, refunds, or exchanges.
@@ -299,11 +299,11 @@ const Policies: React.FC = () => {
                 <h3 className="font-semibold text-gray-900 mb-2">Contact Methods</h3>
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
+                    <span className="w-2 h-2 bg-pink-500 rounded-full mr-3"></span>
                     WhatsApp: <strong>08023170466</strong>
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
+                    <span className="w-2 h-2 bg-pink-500 rounded-full mr-3"></span>
                     Email: <strong>bwittyhairs@gmail.com</strong>
                   </li>
                 </ul>

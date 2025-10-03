@@ -44,7 +44,7 @@ const UserAccount: React.FC = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
         </div>
       </div>
@@ -81,7 +81,7 @@ const UserAccount: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending_payment':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-pink-100 text-pink-800';
       case 'processing':
         return 'bg-blue-100 text-blue-800';
       case 'shipped':
@@ -100,7 +100,7 @@ const UserAccount: React.FC = () => {
       case 'paid':
         return 'bg-green-100 text-green-800';
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-pink-100 text-pink-800';
       case 'failed':
         return 'bg-red-100 text-red-800';
       case 'cod':
@@ -136,7 +136,7 @@ const UserAccount: React.FC = () => {
                 onClick={() => setActiveTab(id as any)}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base ${
                   activeTab === id
-                    ? 'bg-yellow-500 text-black'
+                    ? 'bg-pink-500 text-black'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
@@ -155,7 +155,7 @@ const UserAccount: React.FC = () => {
               {!isEditing && (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-black font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base w-full sm:w-auto"
+                  className="bg-pink-500 hover:bg-pink-600 text-black font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base w-full sm:w-auto"
                 >
                   Edit Profile
                 </button>
@@ -173,7 +173,7 @@ const UserAccount: React.FC = () => {
                       type="text"
                       value={editForm.firstName}
                       onChange={(e) => setEditForm({ ...editForm, firstName: e.target.value })}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm sm:text-base"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent text-sm sm:text-base"
                       placeholder="Enter your first name"
                     />
                   </div>
@@ -186,7 +186,7 @@ const UserAccount: React.FC = () => {
                       type="text"
                       value={editForm.lastName}
                       onChange={(e) => setEditForm({ ...editForm, lastName: e.target.value })}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm sm:text-base"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent text-sm sm:text-base"
                       placeholder="Enter your last name"
                     />
                   </div>
@@ -199,7 +199,7 @@ const UserAccount: React.FC = () => {
                       type="tel"
                       value={editForm.phone}
                       onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm sm:text-base"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent text-sm sm:text-base"
                       placeholder="Enter your phone number"
                     />
                   </div>
@@ -212,7 +212,7 @@ const UserAccount: React.FC = () => {
                     className={`flex-1 font-bold py-3 px-4 rounded-lg transition-colors text-sm sm:text-base ${
                       isUpdating
                         ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                        : 'bg-yellow-500 hover:bg-yellow-600 text-black'
+                        : 'bg-pink-500 hover:bg-pink-600 text-black'
                     }`}
                   >
                     {isUpdating ? 'Updating...' : 'Save Changes'}
@@ -262,7 +262,7 @@ const UserAccount: React.FC = () => {
                           Verified
                         </span>
                       ) : (
-                        <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                        <span className="text-xs bg-pink-100 text-pink-800 px-2 py-1 rounded-full">
                           Unverified
                         </span>
                       )}
@@ -303,7 +303,7 @@ const UserAccount: React.FC = () => {
                         Change Password
                       </Link>
                       {!user?.emailVerified && (
-                        <button className="block w-full text-left p-3 border border-yellow-300 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors text-sm sm:text-base">
+                        <button className="block w-full text-left p-3 border border-pink-300 bg-pink-50 rounded-lg hover:bg-pink-100 transition-colors text-sm sm:text-base">
                           Resend Verification Email
                         </button>
                       )}
@@ -317,7 +317,7 @@ const UserAccount: React.FC = () => {
                         <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 mt-1" />
                         <div className="text-gray-600 text-sm sm:text-base">
                           <p>No default address set</p>
-                          <button className="text-yellow-600 hover:text-yellow-700 text-xs sm:text-sm mt-1">
+                          <button className="text-pink-600 hover:text-pink-700 text-xs sm:text-sm mt-1">
                             Add Address
                           </button>
                         </div>
@@ -362,7 +362,7 @@ const UserAccount: React.FC = () => {
                           </span>
                           <Link
                             to={`/account/orders/${order.id}`}
-                            className="inline-flex items-center text-yellow-600 hover:text-yellow-700 text-xs sm:text-sm font-medium"
+                            className="inline-flex items-center text-pink-600 hover:text-pink-700 text-xs sm:text-sm font-medium"
                           >
                             <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                             View Details
@@ -427,7 +427,7 @@ const UserAccount: React.FC = () => {
                   <p className="text-gray-600 mb-6 text-sm sm:text-base">Start shopping to see your orders here</p>
                   <Link
                     to="/shop"
-                    className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg transition-colors text-sm sm:text-base"
+                    className="bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-6 rounded-lg transition-colors text-sm sm:text-base"
                   >
                     Start Shopping
                   </Link>
@@ -451,7 +451,7 @@ const UserAccount: React.FC = () => {
                       onClick={() => setCurrentPage(page)}
                       className={`px-3 py-2 border rounded-lg text-sm ${
                         currentPage === page
-                          ? 'bg-yellow-500 text-black border-yellow-500'
+                          ? 'bg-pink-500 text-black border-pink-500'
                           : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >

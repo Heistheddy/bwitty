@@ -24,7 +24,7 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
         className={`w-full py-2 px-4 rounded-lg font-medium transition-colors flex items-center justify-center ${
           disabled
             ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            : 'bg-yellow-500 hover:bg-yellow-600 text-black'
+            : 'bg-pink-500 hover:bg-pink-600 text-black'
         }`}
       >
         <ShoppingCart className="w-4 h-4 mr-2" />
@@ -44,7 +44,7 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
       <span className="font-medium text-lg min-w-[2rem] text-center">{quantity}</span>
       <button
         onClick={onIncrease}
-        className="bg-yellow-500 hover:bg-yellow-600 text-black w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+        className="bg-pink-500 hover:bg-pink-600 text-black w-8 h-8 rounded-full flex items-center justify-center transition-colors"
       >
         <Plus className="w-4 h-4" />
       </button>

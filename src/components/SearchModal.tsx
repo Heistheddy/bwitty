@@ -58,7 +58,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 placeholder="Search products..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                 autoFocus
               />
             </div>
@@ -83,7 +83,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 {searchTerm && (
                   <Link
                     to={`/shop?search=${encodeURIComponent(searchTerm)}`}
-                    className="text-yellow-600 hover:text-yellow-700 text-sm font-medium"
+                    className="text-pink-600 hover:text-pink-700 text-sm font-medium"
                     onClick={onClose}
                   >
                     View all results
