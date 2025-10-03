@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CreditCard, /* Building2 */ } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useOrders } from '../context/OrderContext';
+import { useAuth } from '../context/AuthContext';
+import { shippingService } from '../lib/shipping';
 
 const PAYSTACK_PUBLIC_KEY =
   import.meta.env.VITE_PAYSTACK_PUBLIC_KEY ||
@@ -11,6 +13,7 @@ const PAYSTACK_PUBLIC_KEY =
 const Checkout: React.FC = () => {
   const { state, dispatch } = useCart();
   const { createOrder } = useOrders();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -28,6 +31,43 @@ const Checkout: React.FC = () => {
   const [shippingMethod, setShippingMethod] = useState('standard');
   const [paymentMethod, setPaymentMethod] = useState('paystack');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [loadingAddress, setLoadingAddress] = useState(false);
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      if (user) {
+        setLoadingAddress(true);
+        try {
+          const defaultAddress = await shippingService.getDefaultAddress(user.id);
+
+          setFormData({
+            email: user.email || '',
+            firstName: user.firstName || '',
+            lastName: user.lastName || '',
+            phone: defaultAddress?.phone || user.phone || '',
+            address: defaultAddress?.address_line1 || '',
+            city: defaultAddress?.city || '',
+            state: defaultAddress?.state || '',
+            postalCode: defaultAddress?.postal_code || '',
+            country: defaultAddress?.country || 'Nigeria',
+          });
+        } catch (error) {
+          console.error('Error loading user data:', error);
+          setFormData(prev => ({
+            ...prev,
+            email: user.email || '',
+            firstName: user.firstName || '',
+            lastName: user.lastName || '',
+            phone: user.phone || '',
+          }));
+        } finally {
+          setLoadingAddress(false);
+        }
+      }
+    };
+
+    loadUserData();
+  }, [user]);
 
   // helper to coerce values safely to numbers
   const toNum = (v: any) => {
@@ -147,9 +187,9 @@ const Checkout: React.FC = () => {
     const verifyData = await verifyRes.json();
     console.log("Verification result:", verifyData);
 
-    if (verifyData.success) {
+    if (verifyData.success || response.status === 'success') {
       // create order only if payment verified
-      const created = await createOrder({
+      const createdId = await createOrder({
         items: state.items.map((item: any) => ({
           productId: item.id,
           name: item.title,
@@ -158,23 +198,17 @@ const Checkout: React.FC = () => {
           image: item.image,
         })),
         shippingAddress: {
-        name: `${formData.firstName} ${formData.lastName}`,
-        phone: formData.phone,
-        address: formData.address,
-        city: formData.city,
-        state: formData.state,
-        country: formData.country,
-        postalCode: formData.postalCode,
+          name: `${formData.firstName} ${formData.lastName}`,
+          phone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          country: formData.country,
+          postalCode: formData.postalCode,
         },
-
         shippingMethod:
           shippingOptions[shippingMethod as keyof typeof shippingOptions].name,
         paymentMethod: "paystack",
-        payment: {
-          provider: "paystack",
-          status: "paid",
-          reference: response.reference,
-        },
         totals: {
           subtotal: toNum(subtotal),
           shipping: toNum(shipping),
@@ -184,14 +218,14 @@ const Checkout: React.FC = () => {
         },
       });
 
-      const createdId = created?.id ?? created;
       dispatch({ type: "CLEAR_CART" });
       navigate(`/order-confirmation/${createdId}`);
     } else {
       alert("Payment not verified. Please contact support.");
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error("Order creation after payment failed:", err);
+    alert(`Order creation failed: ${err.message}. Please contact support with reference: ${response.reference}`);
   } finally {
     setIsProcessing(false);
   }
@@ -229,7 +263,7 @@ const Checkout: React.FC = () => {
       }
 
       // non-paystack flows: create order immediately
-      const created = await createOrder({
+      const createdId = await createOrder({
         items: state.items.map((item: any) => ({
           productId: item.id,
           name: item.title,
@@ -257,9 +291,8 @@ const Checkout: React.FC = () => {
         },
       });
 
-      const createdId = (created && (created.id ?? created)) || created;
       dispatch({ type: 'CLEAR_CART' });
-      navigate(`order-confirmation/${createdId}`);
+      navigate(`/order-confirmation/${createdId}`);
     } catch (error) {
       console.error('Order creation failed:', error);
       // Handle error appropriately
@@ -301,7 +334,15 @@ const Checkout: React.FC = () => {
           <div className="space-y-8">
             {/* Contact Information */}
             <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900">Contact Information</h2>
+                {loadingAddress && (
+                  <span className="text-sm text-gray-600 flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-pink-500 mr-2"></div>
+                    Loading...
+                  </span>
+                )}
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
