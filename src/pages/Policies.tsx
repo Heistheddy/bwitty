@@ -33,8 +33,8 @@ const Policies: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center p-4 bg-pink-50 rounded-lg">
                 <Clock className="w-8 h-8 text-pink-500 mx-auto mb-2" />
-                <h3 className="font-semibold text-gray-900">7-Day Window</h3>
-                <p className="text-sm text-gray-600">Return items within 7 days of delivery</p>
+                <h3 className="font-semibold text-gray-900">24-48 hours Window</h3>
+                <p className="text-sm text-gray-600">Return items within 24-48 hours of delivery</p>
               </div>
               <div className="text-center p-4 bg-green-50 rounded-lg">
                 <Package className="w-8 h-8 text-green-500 mx-auto mb-2" />
@@ -62,7 +62,7 @@ const Policies: React.FC = () => {
                 <ul className="space-y-2 text-gray-600 ml-7">
                   <li className="flex items-start">
                     <span className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                    Items returned within  <strong>  7 days </strong>   of delivery date
+                    Items returned within  <strong>  24-48 hours </strong>   of delivery date
                   </li>
                   <li className="flex items-start">
                     <span className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
@@ -95,7 +95,7 @@ const Policies: React.FC = () => {
                   </li>
                   <li className="flex items-start">
                     <span className="w-2 h-2 bg-red-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                    Items returned after the <strong>7-day</strong> return window
+                    Items returned after the <strong>24-48 hours</strong> return window
                   </li>
                   <li className="flex items-start">
                     <span className="w-2 h-2 bg-red-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
@@ -130,7 +130,7 @@ const Policies: React.FC = () => {
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">Contact Customer Service</h3>
                   <p className="text-gray-600 mb-2">
-                    Reach out to us within 7 days of receiving your order through:
+                    Reach out to us within 24-48 hours of receiving your order through:
                   </p>
                   <ul className="text-gray-600 text-sm space-y-1 ml-4">
                     <li>• WhatsApp: <strong>08023170466</strong></li>
