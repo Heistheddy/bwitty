@@ -90,22 +90,24 @@ const Shop: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <CartNotification
         show={cartNotification.show}
         onClose={() => setCartNotification({ show: false, productName: '' })}
         productName={cartNotification.productName}
       />
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-12">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">All Products</h1>
-          <p className="text-gray-600 mt-1">Discover our complete product range</p>
+        <div className="mb-10 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+            Shop <span className="text-pink-500">Our Collection</span>
+          </h1>
+          <p className="text-gray-600 text-lg">Discover premium products curated just for you</p>
         </div>
 
         {/* Search Bar */}
-        <div className="mb-6">
+        <div className="mb-8 max-w-2xl mx-auto">
           <SearchBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
@@ -114,17 +116,17 @@ const Shop: React.FC = () => {
         </div>
 
         {/* Toolbar */}
-        <div className="flex items-center justify-between bg-white rounded-lg shadow-sm p-4 mb-6">
-          <span className="text-gray-600">
-            {visibleProducts.length} product
-            {visibleProducts.length !== 1 ? 's' : ''}
+        <div className="flex flex-col sm:flex-row items-center justify-between bg-white rounded-xl shadow-sm p-5 mb-8 gap-4">
+          <span className="text-gray-700 font-medium">
+            <span className="text-pink-500 font-bold">{visibleProducts.length}</span> product
+            {visibleProducts.length !== 1 ? 's' : ''} available
           </span>
-          <div className="flex items-center space-x-2">
-            <label className="text-sm text-gray-600">Sort by:</label>
+          <div className="flex items-center space-x-3">
+            <label className="text-sm text-gray-600 font-medium">Sort by:</label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-1 text-sm"
+              className="border-2 border-gray-300 rounded-lg px-4 py-2 text-sm font-medium focus:border-pink-500 focus:outline-none transition-colors cursor-pointer bg-white hover:border-pink-400"
             >
               <option value="name">Name A-Z</option>
               <option value="price-low">Price: Low to High</option>
@@ -136,11 +138,12 @@ const Shop: React.FC = () => {
 
         {/* Products Grid */}
         {loading ? (
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
+          <div className="flex flex-col justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-pink-500 border-t-transparent"></div>
+            <p className="text-gray-600 mt-4 font-medium">Loading products...</p>
           </div>
         ) : visibleProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {visibleProducts.map((product) => (
 <ProductCard
   key={product.id}
@@ -160,19 +163,26 @@ const Shop: React.FC = () => {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              No products found
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Try adjusting your search terms.
-            </p>
-            <button
-              onClick={() => setSearchTerm('')}
-              className="bg-pink-500 hover:bg-pink-600 text-black font-medium py-2 px-4 rounded-lg transition-colors"
-            >
-              Clear Search
-            </button>
+          <div className="bg-white rounded-xl shadow-md p-16 text-center">
+            <div className="max-w-md mx-auto">
+              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                No products found
+              </h3>
+              <p className="text-gray-600 mb-8 text-lg">
+                We couldn't find any products matching your search.
+              </p>
+              <button
+                onClick={() => setSearchTerm('')}
+                className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-lg transition-all transform hover:scale-105 shadow-md"
+              >
+                Clear Search
+              </button>
+            </div>
           </div>
         )}
       </div>

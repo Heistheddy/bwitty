@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import { Product } from '../data/products';
@@ -75,31 +75,56 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
     }
   };
 
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = product.images && product.images.length > 0 ? product.images : [product.image];
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
   return (
-    <div className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+    <div className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-pink-200">
       <Link to={`/product/${product.id}`}>
-        <div className="relative aspect-square overflow-hidden">
+        <div className="relative aspect-square overflow-hidden bg-gray-50">
           <img
-            src={product.image}
+            src={images[currentImageIndex]}
             alt={product.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
           {product.originalPrice && (
-            <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded text-sm font-bold">
+            <div className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg">
               SALE
             </div>
           )}
           {!product.inStock && (
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">OUT OF STOCK</span>
+            <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center backdrop-blur-sm">
+              <span className="text-white font-bold text-lg bg-black bg-opacity-50 px-4 py-2 rounded-lg">OUT OF STOCK</span>
+            </div>
+          )}
+          {images.length > 1 && (
+            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1.5">
+              {images.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-1.5 h-1.5 rounded-full transition-all ${
+                    currentImageIndex === index ? 'bg-white w-4' : 'bg-white bg-opacity-50'
+                  }`}
+                />
+              ))}
             </div>
           )}
         </div>
       </Link>
       
-      <div className="p-4">
+      <div className="p-5">
         <Link to={`/product/${product.id}`}>
-          <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-pink-600 transition-colors line-clamp-2">
+          <h3 className="font-bold text-gray-900 mb-2 group-hover:text-pink-600 transition-colors line-clamp-2 text-lg">
             {product.title}
           </h3>
         </Link>
@@ -126,19 +151,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
           {product.description}
         </p>
         
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <span className="text-lg font-bold text-gray-900">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col">
+            <span className="text-xl font-bold text-gray-900">
               {formatPrice(product.price)}
             </span>
             {product.originalPrice && (
-              <span className="text-sm text-gray-500 line-through ml-2">
+              <span className="text-sm text-gray-500 line-through">
                 {formatPrice(product.originalPrice)}
               </span>
             )}
           </div>
           {!product.inStock && (
-            <span className="text-red-500 text-sm font-medium">Out of Stock</span>
+            <span className="text-red-500 text-sm font-semibold bg-red-50 px-2 py-1 rounded">Out of Stock</span>
           )}
         </div>
         
