@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 // ✅ Enable CORS
 app.use(cors({
-  origin: "http://localhost:5173", // frontend origin
+  origin: ["http://localhost:5173", "https://bwitty.com.ng", "http://bwitty.com.ng" ],// frontend origin
   credentials: true,
 }));
 // Initialize payment
