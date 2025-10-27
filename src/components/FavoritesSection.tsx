@@ -8,9 +8,9 @@ import { useCart } from '../context/CartContext';
 
 interface Product {
   id: string;
-  title: string;
+  name: string;
   price: number;
-  image: string;
+  image_url: string;
   category: string;
 }
 
@@ -42,7 +42,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
 
       const { data: products, error } = await supabase
         .from('products')
-        .select('id, title, price, image, category')
+        .select('id, name, price, image_url, category')
         .in('id', favoriteIds);
 
       if (error) {
@@ -93,9 +93,9 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
       type: 'ADD_ITEM',
       payload: {
         id: product.id,
-        title: product.title,
+        title: product.name,
         price: product.price,
-        image: product.image,
+        image: product.image_url,
         quantity: 1,
         weight: 0.5,
       },
@@ -103,7 +103,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
 
     toast({
       title: 'Added to Cart',
-      description: `${product.title} has been added to your cart`,
+      description: `${product.name} has been added to your cart`,
     });
   };
 
@@ -163,8 +163,8 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
             <Link to={`/product/${product.id}`} className="block">
               <div className="aspect-square overflow-hidden bg-gray-100">
                 <img
-                  src={product.image}
-                  alt={product.title}
+                  src={product.image_url}
+                  alt={product.name}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -173,7 +173,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
             <div className="p-4">
               <Link to={`/product/${product.id}`}>
                 <h3 className="font-semibold text-gray-900 mb-1 hover:text-pink-600 transition-colors line-clamp-2">
-                  {product.title}
+                  {product.name}
                 </h3>
               </Link>
 

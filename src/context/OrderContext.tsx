@@ -25,6 +25,7 @@ interface CreateOrderData {
   shippingAddress: ShippingAddress;
   shippingMethod: string;
   paymentMethod: 'paystack' | 'opay' | 'cod';
+  paymentReference?: string;
   totals: {
     subtotal: number;
     shipping: number;
@@ -230,6 +231,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       payment: {
         status: orderData.paymentMethod === 'cod' ? 'cod' : 'pending',
         provider: orderData.paymentMethod,
+        reference: orderData.paymentReference || null,
       },
       status: orderData.paymentMethod === 'cod' ? 'processing' : 'pending_payment',
       audit_log: auditLog,

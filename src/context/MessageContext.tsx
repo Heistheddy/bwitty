@@ -85,6 +85,43 @@ export const MessageProvider: React.FC<{ children: React.ReactNode }> = ({ child
       throw error;
     }
 
+    try {
+      const { data: recipientData } = await supabase
+        .from('profiles')
+        .select('first_name, last_name')
+        .eq('id', recipientId)
+        .single();
+
+      const { data: orderData } = await supabase
+        .from('orders')
+        .select('order_no, customer_email')
+        .eq('id', orderId)
+        .single();
+
+      if (recipientData && orderData) {
+        const recipientName = `${recipientData.first_name || ''} ${recipientData.last_name || ''}`.trim() || 'Customer';
+        const senderName = user.role === 'admin' ? 'BWITTY NG Team' : `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'User';
+
+        const emailUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-message-email`;
+        await fetch(emailUrl, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: orderData.customer_email,
+            recipientName,
+            senderName,
+            orderNo: orderData.order_no,
+            message,
+          }),
+        });
+      }
+    } catch (emailError) {
+      console.warn('Failed to send email notification:', emailError);
+    }
+
     await refreshMessages();
   };
 

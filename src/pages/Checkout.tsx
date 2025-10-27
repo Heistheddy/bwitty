@@ -210,6 +210,7 @@ const Checkout: React.FC = () => {
         shippingMethod:
           shippingOptions[shippingMethod as keyof typeof shippingOptions].name,
         paymentMethod: "paystack",
+        paymentReference: response.reference,
         totals: {
           subtotal: toNum(subtotal),
           shipping: toNum(shipping),
