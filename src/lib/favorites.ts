@@ -10,7 +10,7 @@ export interface UserFavorite {
 export const favoriteService = {
   async getUserFavorites(userId: string): Promise<UserFavorite[]> {
     const { data, error } = await supabase
-      .from('user_favorites')
+      .from('user_favourites')
       .select('*')
       .eq('user_id', userId)
       .order('created_at', { ascending: false });
@@ -21,7 +21,7 @@ export const favoriteService = {
 
   async getUserFavoriteIds(userId: string): Promise<string[]> {
     const { data, error } = await supabase
-      .from('user_favorites')
+      .from('user_favourites')
       .select('product_id')
       .eq('user_id', userId);
 
@@ -31,7 +31,7 @@ export const favoriteService = {
 
   async isFavorite(productId: string, userId: string): Promise<boolean> {
     const { data, error } = await supabase
-      .from('user_favorites')
+      .from('user_favourites')
       .select('id')
       .eq('product_id', productId)
       .eq('user_id', userId)
@@ -46,7 +46,7 @@ export const favoriteService = {
     if (!user) throw new Error('User not authenticated');
 
     const { error } = await supabase
-      .from('user_favorites')
+      .from('user_favourites')
       .insert({
         product_id: productId,
         user_id: user.id,
@@ -60,7 +60,7 @@ export const favoriteService = {
     if (!user) throw new Error('User not authenticated');
 
     const { error } = await supabase
-      .from('user_favorites')
+      .from('user_favourites')
       .delete()
       .eq('product_id', productId)
       .eq('user_id', user.id);
@@ -70,7 +70,7 @@ export const favoriteService = {
 
   async removeFromFavorites(productId: string, userId: string): Promise<void> {
     const { error } = await supabase
-      .from('user_favorites')
+      .from('user_favourites')
       .delete()
       .eq('product_id', productId)
       .eq('user_id', userId);

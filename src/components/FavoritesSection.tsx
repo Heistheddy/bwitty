@@ -10,7 +10,6 @@ interface Product {
   id: string;
   name: string;
   price: number;
-  category: string;
   product_images: Array<{ image_url: string }>;
 }
 
@@ -46,7 +45,6 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
           id,
           name,
           price,
-          category,
           product_images (image_url)
         `)
         .in('id', favoriteIds);
@@ -184,12 +182,9 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
                 </h3>
               </Link>
 
-              <div className="flex items-center justify-between mb-3">
+              <div className="mb-3">
                 <span className="text-lg font-bold text-pink-600">
                   {formatPrice(product.price)}
-                </span>
-                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                  {product.category}
                 </span>
               </div>
 
