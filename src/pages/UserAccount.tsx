@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { User, Package, MapPin, Phone, Mail, Calendar, Eye, Truck, Heart } from 'lucide-react';
+import { User, Package, MapPin, Phone, Mail, Calendar, Eye, Truck, Heart, MessageCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useOrders } from '../context/OrderContext';
 import { Order } from '../data/orders';
 import ShippingAddressManager from '../components/ShippingAddressManager';
 import FavoritesSection from '../components/FavoritesSection';
+import UserMessagesSection from '../components/UserMessagesSection';
 
 const UserAccount: React.FC = () => {
   const { user, isAuthenticated, updateProfile, loading } = useAuth();
   const { getUserOrders } = useOrders();
-  const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'shipping' | 'favorites'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'favorites' | 'messages' | 'shipping'>('profile');
   const [orders, setOrders] = useState<Order[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
@@ -133,6 +134,7 @@ const UserAccount: React.FC = () => {
               { id: 'profile', label: 'Profile', icon: User },
               { id: 'orders', label: 'Orders', icon: Package },
               { id: 'favorites', label: 'Favorites', icon: Heart },
+              { id: 'messages', label: 'Messages', icon: MessageCircle },
               { id: 'shipping', label: 'Shipping', icon: MapPin },
             ].map(({ id, label, icon: Icon }) => (
               <button
@@ -489,6 +491,13 @@ const UserAccount: React.FC = () => {
         {activeTab === 'favorites' && user && (
           <div className="bg-white rounded-lg shadow-sm p-8">
             <FavoritesSection userId={user.id} />
+          </div>
+        )}
+
+        {/* Messages Tab */}
+        {activeTab === 'messages' && user && (
+          <div className="bg-white rounded-lg shadow-sm p-8">
+            <UserMessagesSection userId={user.id} />
           </div>
         )}
 

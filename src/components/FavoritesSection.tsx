@@ -10,8 +10,8 @@ interface Product {
   id: string;
   name: string;
   price: number;
-  image_url: string;
   category: string;
+  product_images: Array<{ image_url: string }>;
 }
 
 interface FavoritesSectionProps {
@@ -42,7 +42,13 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
 
       const { data: products, error } = await supabase
         .from('products')
-        .select('id, name, price, image_url, category')
+        .select(`
+          id,
+          name,
+          price,
+          category,
+          product_images!fk_product_images_product (image_url)
+        `)
         .in('id', favoriteIds);
 
       if (error) {
@@ -89,13 +95,14 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
   };
 
   const handleAddToCart = (product: Product) => {
+    const imageUrl = product.product_images?.[0]?.image_url || '';
     dispatch({
       type: 'ADD_ITEM',
       payload: {
         id: product.id,
         title: product.name,
         price: product.price,
-        image: product.image_url,
+        image: imageUrl,
         quantity: 1,
         weight: 0.5,
       },
@@ -163,7 +170,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
             <Link to={`/product/${product.id}`} className="block">
               <div className="aspect-square overflow-hidden bg-gray-100">
                 <img
-                  src={product.image_url}
+                  src={product.product_images?.[0]?.image_url || ''}
                   alt={product.name}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
