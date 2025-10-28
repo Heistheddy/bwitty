@@ -47,7 +47,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({ userId }) => {
           name,
           price,
           category,
-          product_images!fk_product_images_product (image_url)
+          product_images (image_url)
         `)
         .in('id', favoriteIds);
 

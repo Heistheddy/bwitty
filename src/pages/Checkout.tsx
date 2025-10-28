@@ -58,7 +58,12 @@ const calculateDeliveryPrice = (
     return lagosPrices[deliveryType];
   }
 
-  return 30000;
+  const otherStatesPrices = {
+    standard: 30000,
+    express: 35000,
+    overnight: 40000
+  };
+  return otherStatesPrices[deliveryType];
 };
 
 const Checkout: React.FC = () => {
@@ -593,7 +598,7 @@ const Checkout: React.FC = () => {
                     {' '}
                     {isLagosState(formData.state)
                       ? 'Standard: ₦7,000 | Express: ₦14,000 | Next Day: ₦20,000'
-                      : 'Flat rate: ₦30,000 for all delivery options'}
+                      : 'Standard: ₦30,000 | Express: ₦35,000 | Next Day: ₦40,000'}
                   </p>
                 </div>
               ) : null}
