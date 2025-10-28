@@ -10,6 +10,30 @@ const PAYSTACK_PUBLIC_KEY =
   import.meta.env.VITE_PAYSTACK_PUBLIC_KEY ||
   'pk_live_3b5bcce4bdce01dce992ce6a972caebcf349ed48';
 
+const NIGERIAN_STATES = [
+  'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno',
+  'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT - Abuja', 'Gombe',
+  'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara',
+  'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau',
+  'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
+];
+
+const getStatePricingTier = (state: string): 'tier1' | 'tier2' | 'tier3' => {
+  const stateLower = state.toLowerCase();
+
+  const tier1States = ['lagos', 'fct - abuja', 'abuja'];
+  if (tier1States.some(s => stateLower.includes(s))) {
+    return 'tier1';
+  }
+
+  const tier2States = ['ogun', 'oyo', 'rivers', 'kano', 'kaduna', 'delta', 'edo'];
+  if (tier2States.some(s => stateLower.includes(s))) {
+    return 'tier2';
+  }
+
+  return 'tier3';
+};
+
 const calculateDeliveryPrice = (
   deliveryType: 'standard' | 'express' | 'overnight',
   country: string,
@@ -35,24 +59,27 @@ const calculateDeliveryPrice = (
     return Math.round(basePrice);
   }
 
-  const isLagos = state && state.toLowerCase().includes('lagos');
+  const pricingTier = getStatePricingTier(state);
 
   const nigerianPrices = {
     standard: {
-      lagos: 1500,
-      others: 2000
+      tier1: 6000,
+      tier2: 7500,
+      tier3: 10000
     },
     express: {
-      lagos: 2500,
-      others: 3000
+      tier1: 10000,
+      tier2: 12500,
+      tier3: 15000
     },
     overnight: {
-      lagos: 3500,
-      others: 4000
+      tier1: 17000,
+      tier2: 17000,
+      tier3: 17000
     }
   };
 
-  return nigerianPrices[deliveryType][isLagos ? 'lagos' : 'others'];
+  return nigerianPrices[deliveryType][pricingTier];
 };
 
 const Checkout: React.FC = () => {
@@ -508,14 +535,31 @@ const Checkout: React.FC = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       State *
                     </label>
-                    <input
-                      type="text"
-                      name="state"
-                      value={formData.state}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                    />
+                    {formData.country.toLowerCase() === 'nigeria' ? (
+                      <select
+                        name="state"
+                        value={formData.state}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      >
+                        <option value="">Select a state</option>
+                        {NIGERIAN_STATES.map((state) => (
+                          <option key={state} value={state}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        type="text"
+                        name="state"
+                        value={formData.state}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -563,13 +607,17 @@ const Checkout: React.FC = () => {
                     Your shipping cost to {formData.country} is displayed below.
                   </p>
                 </div>
-              ) : (
+              ) : formData.state ? (
                 <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
                   <p className="text-sm text-green-800">
-                    <strong>Nigeria Delivery:</strong> {formData.state.toLowerCase().includes('lagos') ? 'Lagos' : 'Other states'} pricing applied.
+                    <strong>Nigeria Delivery to {formData.state}:</strong>
+                    {' '}
+                    {getStatePricingTier(formData.state) === 'tier1' && 'Major city pricing (₦6,000 - ₦17,000)'}
+                    {getStatePricingTier(formData.state) === 'tier2' && 'Regional pricing (₦7,500 - ₦17,000)'}
+                    {getStatePricingTier(formData.state) === 'tier3' && 'Standard pricing (₦10,000 - ₦17,000)'}
                   </p>
                 </div>
-              )}
+              ) : null}
               <div className="space-y-3">
                 {Object.entries(shippingOptions).map(([key, option]) => (
                   <label key={key} className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-pink-500 transition-colors cursor-pointer">
