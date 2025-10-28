@@ -18,6 +18,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Policies from './pages/Policies';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminMessages from './pages/admin/AdminMessages';
 import OrderConfirmation from './pages/OrderConfirmation';
 import UserAccount from './pages/UserAccount';
 import OrderDetails from './pages/OrderDetails';
@@ -80,6 +81,7 @@ function App() {
                     <Route path="/account" element={<UserAccount />} />
                     <Route path="/account/orders/:orderId" element={<OrderDetails />} />
                     <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                    <Route path="/admin/messages" element={<AdminMessages />} />
                     <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
                   </Routes>
                 </main>

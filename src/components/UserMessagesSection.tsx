@@ -4,18 +4,27 @@ import { MessageCircle, Package, Send, ArrowLeft } from 'lucide-react';
 import { useMessages } from '../context/MessageContext';
 import { useOrders } from '../context/OrderContext';
 import { useAuth } from '../context/AuthContext';
+import { supabase } from '../lib/supabase';
 
 interface UserMessagesSectionProps {
   userId: string;
 }
 
 const UserMessagesSection: React.FC<UserMessagesSectionProps> = ({ userId }) => {
-  const { messages, getOrderMessages, sendMessage, loading } = useMessages();
+  const { messages, getOrderMessages, sendMessage, loading, refreshMessages } = useMessages();
   const { orders } = useOrders();
   const { user } = useAuth();
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState('');
   const [sending, setSending] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshMessages();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [refreshMessages]);
 
   const userOrders = orders.filter(order => order.userId === userId);
 
@@ -43,15 +52,42 @@ const UserMessagesSection: React.FC<UserMessagesSectionProps> = ({ userId }) => 
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newMessage.trim() || !selectedOrderId || sending) return;
+    if (!newMessage.trim() || !selectedOrderId || sending || !selectedOrder) return;
 
     setSending(true);
     try {
-      const adminId = '00000000-0000-0000-0000-000000000000';
-      await sendMessage(selectedOrderId, adminId, newMessage.trim());
+      const existingMessages = getOrderMessages(selectedOrderId);
+      let recipientId = '';
+
+      if (existingMessages.length > 0) {
+        const adminMessage = existingMessages.find(msg => msg.sender_id !== userId);
+        if (adminMessage) {
+          recipientId = adminMessage.sender_id;
+        }
+      }
+
+      if (!recipientId) {
+        const { data: adminProfile } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('role', 'admin')
+          .limit(1)
+          .single();
+
+        if (adminProfile) {
+          recipientId = adminProfile.id;
+        }
+      }
+
+      if (!recipientId) {
+        throw new Error('Could not find admin to send message to');
+      }
+
+      await sendMessage(selectedOrderId, recipientId, newMessage.trim());
       setNewMessage('');
     } catch (error) {
       console.error('Error sending message:', error);
+      alert('Failed to send message. Please try again.');
     } finally {
       setSending(false);
     }

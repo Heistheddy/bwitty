@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, Link } from 'react-router-dom';
-import { Package, ShoppingCart, Users, DollarSign, Plus, CreditCard as Edit, Trash2, Search, Upload, Image as ImageIcon, LogOut, X } from 'lucide-react';
+import { Package, ShoppingCart, Users, DollarSign, Plus, CreditCard as Edit, Trash2, Search, Upload, Image as ImageIcon, LogOut, X, MessageCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { productService, DatabaseProduct, ProductImage, supabase } from '../../lib/supabase';
 import { useOrders } from '../../context/OrderContext';
@@ -385,6 +385,13 @@ const AdminDashboard: React.FC = () => {
                 <span>{label}</span>
               </button>
             ))}
+            <Link
+              to="/admin/messages"
+              className="flex items-center space-x-2 px-3 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            >
+              <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>Messages</span>
+            </Link>
           </nav>
         </div>
 

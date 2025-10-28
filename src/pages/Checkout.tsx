@@ -10,6 +10,51 @@ const PAYSTACK_PUBLIC_KEY =
   import.meta.env.VITE_PAYSTACK_PUBLIC_KEY ||
   'pk_live_3b5bcce4bdce01dce992ce6a972caebcf349ed48';
 
+const calculateDeliveryPrice = (
+  deliveryType: 'standard' | 'express' | 'overnight',
+  country: string,
+  state: string
+): number => {
+  if (country && country.toLowerCase() !== 'nigeria') {
+    const internationalPrices: Record<string, number> = {
+      'united states': 120000,
+      'united kingdom': 110000,
+      'canada': 115000,
+      'ghana': 90000,
+      'south africa': 95000,
+      'kenya': 95000,
+      'united arab emirates': 105000,
+      'france': 110000,
+      'germany': 110000,
+    };
+
+    const countryLower = country.toLowerCase();
+    const basePrice = internationalPrices[countryLower] ||
+      (85000 + Math.random() * 50000);
+
+    return Math.round(basePrice);
+  }
+
+  const isLagos = state && state.toLowerCase().includes('lagos');
+
+  const nigerianPrices = {
+    standard: {
+      lagos: 1500,
+      others: 2000
+    },
+    express: {
+      lagos: 2500,
+      others: 3000
+    },
+    overnight: {
+      lagos: 3500,
+      others: 4000
+    }
+  };
+
+  return nigerianPrices[deliveryType][isLagos ? 'lagos' : 'others'];
+};
+
 const Checkout: React.FC = () => {
   const { state, dispatch } = useCart();
   const { createOrder } = useOrders();
@@ -29,6 +74,15 @@ const Checkout: React.FC = () => {
   });
 
   const [shippingMethod, setShippingMethod] = useState('standard');
+
+  useEffect(() => {
+    const isIntl = formData.country && formData.country.toLowerCase() !== 'nigeria';
+    if (isIntl) {
+      setShippingMethod('international');
+    } else if (shippingMethod === 'international') {
+      setShippingMethod('standard');
+    }
+  }, [formData.country]);
   const [paymentMethod, setPaymentMethod] = useState('paystack');
   const [isProcessing, setIsProcessing] = useState(false);
   const [loadingAddress, setLoadingAddress] = useState(false);
@@ -90,12 +144,29 @@ const Checkout: React.FC = () => {
     0
   );
 
-  // shipping options computed using safe numbers
-  const shippingOptions: Record<string, { name: string; price: number }> = {
-    standard: { name: 'Standard Delivery (5-7 days)', price: Math.max(2500, totalWeight * 500) },
-    express: { name: 'Express Delivery (2-3 days)', price: Math.max(5000, totalWeight * 800) },
-    overnight: { name: 'Next Day Delivery', price: Math.max(8000, totalWeight * 1200) },
-  };
+  const isInternational = formData.country && formData.country.toLowerCase() !== 'nigeria';
+
+  const shippingOptions: Record<string, { name: string; price: number }> = isInternational
+    ? {
+        international: {
+          name: 'International Shipping',
+          price: calculateDeliveryPrice('standard', formData.country, formData.state)
+        }
+      }
+    : {
+        standard: {
+          name: 'Standard Delivery (5-7 days)',
+          price: calculateDeliveryPrice('standard', formData.country, formData.state)
+        },
+        express: {
+          name: 'Express Delivery (2-3 days)',
+          price: calculateDeliveryPrice('express', formData.country, formData.state)
+        },
+        overnight: {
+          name: 'Next Day Delivery',
+          price: calculateDeliveryPrice('overnight', formData.country, formData.state)
+        }
+      };
 
   // compute subtotal safely from cart items (fallback if state.total is missing/invalid)
   const subtotalFromItems = state.items.reduce(
@@ -485,6 +556,20 @@ const Checkout: React.FC = () => {
             {/* Shipping Method */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Shipping Method</h2>
+              {isInternational ? (
+                <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-800">
+                    <strong>International Shipping:</strong> Delivery prices vary by destination.
+                    Your shipping cost to {formData.country} is displayed below.
+                  </p>
+                </div>
+              ) : (
+                <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-sm text-green-800">
+                    <strong>Nigeria Delivery:</strong> {formData.state.toLowerCase().includes('lagos') ? 'Lagos' : 'Other states'} pricing applied.
+                  </p>
+                </div>
+              )}
               <div className="space-y-3">
                 {Object.entries(shippingOptions).map(([key, option]) => (
                   <label key={key} className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-pink-500 transition-colors cursor-pointer">
