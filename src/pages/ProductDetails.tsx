@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Star, Truck, Shield, Heart, Minus, Plus, ShoppingCart } from 'lucide-react';
+import { ArrowLeft, Star, Truck, Shield, Minus, Plus, ShoppingCart } from 'lucide-react';
 import { productService, DatabaseProduct, ProductImage, supabase, subscribeToProducts } from '../lib/supabase';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { reviewService, ProductReview } from '../lib/reviews';
-import { favoriteService } from '../lib/favorites';
 import ImageCarousel from '../components/ImageCarousel';
 import { useToast } from '../hooks/use-toast';
 
@@ -21,7 +20,6 @@ const ProductDetails: React.FC = () => {
   const [reviews, setReviews] = useState<ProductReview[]>([]);
   const [averageRating, setAverageRating] = useState(0);
   const [reviewCount, setReviewCount] = useState(0);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
   const [userReview, setUserReview] = useState<ProductReview | null>(null);
@@ -33,8 +31,7 @@ const ProductDetails: React.FC = () => {
       if (id && mounted) {
         await Promise.all([
           loadProduct(),
-          loadReviews(),
-          user ? checkFavorite() : Promise.resolve()
+          loadReviews()
         ]);
       }
     };
@@ -128,42 +125,6 @@ const ProductDetails: React.FC = () => {
     }
   };
 
-  const checkFavorite = async () => {
-    if (!id || !user) return;
-    try {
-      const isFav = await favoriteService.isFavorite(id, user.id);
-      setIsFavorite(isFav);
-    } catch (error) {
-      console.error('Error checking favorite:', error);
-    }
-  };
-
-  const handleToggleFavorite = async () => {
-    if (!isAuthenticated) {
-      toast({
-        title: 'Login Required',
-        description: 'Please login to add favorites',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    try {
-      const newStatus = await favoriteService.toggleFavorite(id!);
-      setIsFavorite(newStatus);
-      toast({
-        title: newStatus ? 'Added to Favorites' : 'Removed from Favorites',
-        description: newStatus ? 'Product added to your favorites' : 'Product removed from favorites',
-      });
-    } catch (error) {
-      console.error('Error toggling favorite:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to update favorites',
-        variant: 'destructive',
-      });
-    }
-  };
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -366,21 +327,10 @@ const ProductDetails: React.FC = () => {
                 <div className="flex space-x-4">
                   <button
                     onClick={handleAddToCart}
-                    className="flex-1 bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
+                    className="w-full bg-pink-500 hover:bg-pink-600 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
                   >
                     <ShoppingCart className="w-5 h-5 mr-2" />
                     Add to Cart
-                  </button>
-                  <button
-                    onClick={handleToggleFavorite}
-                    className={`p-3 border rounded-lg transition-colors ${
-                      isFavorite
-                        ? 'bg-pink-50 border-pink-500 text-pink-500'
-                        : 'border-gray-300 hover:bg-gray-50 text-gray-600'
-                    }`}
-                    title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-                  >
-                    <Heart className={`w-5 h-5 ${isFavorite ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
