@@ -18,20 +18,8 @@ const NIGERIAN_STATES = [
   'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
 ];
 
-const getStatePricingTier = (state: string): 'tier1' | 'tier2' | 'tier3' => {
-  const stateLower = state.toLowerCase();
-
-  const tier1States = ['lagos', 'fct - abuja', 'abuja'];
-  if (tier1States.some(s => stateLower.includes(s))) {
-    return 'tier1';
-  }
-
-  const tier2States = ['ogun', 'oyo', 'rivers', 'kano', 'kaduna', 'delta', 'edo'];
-  if (tier2States.some(s => stateLower.includes(s))) {
-    return 'tier2';
-  }
-
-  return 'tier3';
+const isLagosState = (state: string): boolean => {
+  return state && state.toLowerCase().includes('lagos');
 };
 
 const calculateDeliveryPrice = (
@@ -59,27 +47,18 @@ const calculateDeliveryPrice = (
     return Math.round(basePrice);
   }
 
-  const pricingTier = getStatePricingTier(state);
+  const isLagos = isLagosState(state);
 
-  const nigerianPrices = {
-    standard: {
-      tier1: 6000,
-      tier2: 7500,
-      tier3: 10000
-    },
-    express: {
-      tier1: 10000,
-      tier2: 12500,
-      tier3: 15000
-    },
-    overnight: {
-      tier1: 17000,
-      tier2: 17000,
-      tier3: 17000
-    }
-  };
+  if (isLagos) {
+    const lagosPrices = {
+      standard: 7000,
+      express: 14000,
+      overnight: 20000
+    };
+    return lagosPrices[deliveryType];
+  }
 
-  return nigerianPrices[deliveryType][pricingTier];
+  return 30000;
 };
 
 const Checkout: React.FC = () => {
@@ -612,9 +591,9 @@ const Checkout: React.FC = () => {
                   <p className="text-sm text-green-800">
                     <strong>Nigeria Delivery to {formData.state}:</strong>
                     {' '}
-                    {getStatePricingTier(formData.state) === 'tier1' && 'Major city pricing (₦6,000 - ₦17,000)'}
-                    {getStatePricingTier(formData.state) === 'tier2' && 'Regional pricing (₦7,500 - ₦17,000)'}
-                    {getStatePricingTier(formData.state) === 'tier3' && 'Standard pricing (₦10,000 - ₦17,000)'}
+                    {isLagosState(formData.state)
+                      ? 'Standard: ₦7,000 | Express: ₦14,000 | Next Day: ₦20,000'
+                      : 'Flat rate: ₦30,000 for all delivery options'}
                   </p>
                 </div>
               ) : null}
