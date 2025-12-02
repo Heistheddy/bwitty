@@ -77,6 +77,8 @@ const ProductDetails: React.FC = () => {
           description,
           price,
           stock,
+          discount_percentage,
+          sale_price,
           created_at,
           updated_at,
           product_images!fk_product_images_product (
@@ -275,9 +277,25 @@ const ProductDetails: React.FC = () => {
             </div>
 
             <div className="flex items-baseline space-x-4">
-              <span className="text-3xl font-bold text-gray-900">
-                {formatPrice(product.price)}
-              </span>
+              {(product as any).discount_percentage ? (
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl text-red-600 line-through font-semibold">
+                      {formatPrice(product.price)}
+                    </span>
+                    <span className="bg-amber-100 text-amber-700 font-bold px-3 py-1 rounded-lg text-sm">
+                      {(product as any).discount_percentage}% OFF
+                    </span>
+                  </div>
+                  <span className="text-4xl font-bold text-gray-900">
+                    {formatPrice((product as any).sale_price || product.price)}
+                  </span>
+                </div>
+              ) : (
+                <span className="text-3xl font-bold text-gray-900">
+                  {formatPrice(product.price)}
+                </span>
+              )}
             </div>
 
             <div className="prose max-w-none">

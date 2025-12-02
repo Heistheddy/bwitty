@@ -97,9 +97,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
             alt={product.title}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
-          {product.originalPrice && (
-            <div className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg">
-              SALE
+          {(product.originalPrice || (product as any).discount_percentage) && (
+            <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-400 to-amber-500 text-black px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg">
+              {(product as any).discount_percentage ? `${(product as any).discount_percentage}% OFF` : 'SALE'}
             </div>
           )}
           {!product.inStock && (
@@ -152,14 +152,32 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
         </p>
         
         <div className="flex items-center justify-between mb-4">
-          <div className="flex flex-col">
-            <span className="text-xl font-bold text-gray-900">
-              {formatPrice(product.price)}
-            </span>
-            {product.originalPrice && (
-              <span className="text-sm text-gray-500 line-through">
-                {formatPrice(product.originalPrice)}
-              </span>
+          <div className="flex flex-col gap-1">
+            {(product as any).discount_percentage ? (
+              <>
+                <div className="flex items-center gap-2">
+                  <span className="text-red-600 text-sm font-semibold line-through">
+                    {formatPrice(product.price)}
+                  </span>
+                  <span className="text-amber-600 font-bold text-xs bg-amber-50 px-2 py-0.5 rounded">
+                    {(product as any).discount_percentage}% OFF
+                  </span>
+                </div>
+                <span className="text-xl font-bold text-gray-900">
+                  {formatPrice((product as any).sale_price || product.price)}
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="text-xl font-bold text-gray-900">
+                  {formatPrice(product.price)}
+                </span>
+                {product.originalPrice && (
+                  <span className="text-sm text-gray-500 line-through">
+                    {formatPrice(product.originalPrice)}
+                  </span>
+                )}
+              </>
             )}
           </div>
           {!product.inStock && (
