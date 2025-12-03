@@ -28,12 +28,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   };
 
   const handleAddToCart = () => {
+    const salePrice = (product as any).sale_price && (product as any).discount_percentage > 0
+      ? (product as any).sale_price
+      : product.price;
+
     dispatch({
       type: 'ADD_TO_CART',
       payload: {
         id: product.id,
         title: product.title,
-        price: product.price,
+        price: salePrice,
         image: product.image,
         weight: product.weight,
       },
@@ -45,12 +49,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   };
 
   const handleIncrease = () => {
+    const salePrice = (product as any).sale_price && (product as any).discount_percentage > 0
+      ? (product as any).sale_price
+      : product.price;
+
     dispatch({
       type: 'ADD_TO_CART',
       payload: {
         id: product.id,
         title: product.title,
-        price: product.price,
+        price: salePrice,
         image: product.image,
         weight: product.weight,
       },
