@@ -212,7 +212,8 @@ const AdminDashboard: React.FC = () => {
           description: productData.description,
           price: productData.price,
           stock: productData.stock,
-          is_active: productData.is_active
+          is_active: productData.is_active,
+          discount_percentage: productData.discount_percentage
         });
 
         if (Object.keys(payload).length === 0) {
@@ -253,7 +254,8 @@ const AdminDashboard: React.FC = () => {
           name: productData.name || '',
           description: productData.description || '',
           price: productData.price || 0,
-          stock: productData.stock || 0
+          stock: productData.stock || 0,
+          discount_percentage: productData.discount_percentage || 0
         });
         
         // Handle new images
@@ -934,6 +936,7 @@ const ProductForm: React.FC<{
     description: product?.description || '',
     price: product?.price || 0,
     stock: product?.stock || 0,
+    discount_percentage: (product as any)?.discount_percentage || 0,
   });
   const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
   const [newImagePreviews, setNewImagePreviews] = useState<string[]>([]);
@@ -1185,6 +1188,40 @@ const ProductForm: React.FC<{
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm sm:text-base"
           placeholder="0"
         />
+      </div>
+
+      <div>
+        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Sales Discount Percentage</label>
+        <select
+          value={formData.discount_percentage}
+          onChange={(e) => setFormData({ ...formData, discount_percentage: Number(e.target.value) })}
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm sm:text-base"
+        >
+          <option value="0">0% - No Discount</option>
+          <option value="5">5% OFF</option>
+          <option value="10">10% OFF</option>
+          <option value="15">15% OFF</option>
+          <option value="20">20% OFF</option>
+          <option value="25">25% OFF</option>
+          <option value="30">30% OFF</option>
+          <option value="35">35% OFF</option>
+          <option value="40">40% OFF</option>
+          <option value="45">45% OFF</option>
+          <option value="50">50% OFF</option>
+          <option value="55">55% OFF</option>
+          <option value="60">60% OFF</option>
+          <option value="65">65% OFF</option>
+          <option value="70">70% OFF</option>
+          <option value="75">75% OFF</option>
+          <option value="80">80% OFF</option>
+          <option value="85">85% OFF</option>
+          <option value="90">90% OFF</option>
+        </select>
+        {formData.discount_percentage > 0 && formData.price > 0 && (
+          <p className="text-xs text-green-600 mt-1">
+            Sale Price: {new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(formData.price - (formData.price * formData.discount_percentage / 100))}
+          </p>
+        )}
       </div>
 
       <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 pt-4">
