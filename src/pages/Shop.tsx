@@ -61,6 +61,8 @@ const Shop: React.FC = () => {
           description,
           price,
           stock,
+          discount_percentage,
+          sale_price,
           created_at,
           product_images!fk_product_images_product (
             id,
@@ -164,11 +166,13 @@ const Shop: React.FC = () => {
     id: product.id,
     title: product.name || '',
     description: product.description || '',
-    price: Number(product.price), // ✅ force number
+    price: Number(product.price),
+    discount_percentage: product.discount_percentage || 0,
+    sale_price: product.sale_price || null,
     image: product.product_images?.[0]?.image_url || '/placeholder.png',
     images: product.product_images?.map((img) => img.image_url) || [],
     inStock: product.stock > 0,
-    quantity: 1, // ✅ default for cart
+    quantity: 1,
   }}
   onAddToCart={handleAddToCart}
 />
