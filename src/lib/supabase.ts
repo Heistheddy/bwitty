@@ -89,6 +89,8 @@ export interface DatabaseProduct {
   description?: string;
   price: number;
   stock: number;
+  discount_percentage?: number;
+  sale_price?: number | null;
   created_at: string;
   updated_at: string;
 }
@@ -124,6 +126,8 @@ export const productService = {
         description,
         price,
         stock,
+        discount_percentage,
+        sale_price,
         created_at,
         updated_at,
         product_images!fk_product_images_product (
@@ -153,6 +157,8 @@ export const productService = {
         description,
         price,
         stock,
+        discount_percentage,
+        sale_price,
         created_at,
         updated_at,
         product_images!fk_product_images_product (
@@ -218,9 +224,14 @@ export const productService = {
       throw new Error('Supabase not configured');
     }
 
+    const discount_percentage = product.discount_percentage || 0;
+    const sale_price = discount_percentage > 0
+      ? product.price - (product.price * discount_percentage / 100)
+      : null;
+
     const { data, error } = await supabase
       .from('products')
-      .insert([product])
+      .insert([{ ...product, sale_price }])
       .select()
       .single();
 
@@ -235,9 +246,23 @@ export const productService = {
     }
 
     const updateData = this.pickDefined(updates);
-    
+
     if (Object.keys(updateData).length === 0) {
       throw new Error('No valid fields to update');
+    }
+
+    // Recalculate sale_price if price or discount_percentage is being updated
+    if (updateData.price !== undefined || updateData.discount_percentage !== undefined) {
+      // Get current product to access existing values
+      const currentProduct = await this.getById(id);
+      if (currentProduct) {
+        const finalPrice = updateData.price !== undefined ? updateData.price : currentProduct.price;
+        const finalDiscount = updateData.discount_percentage !== undefined ? updateData.discount_percentage : (currentProduct.discount_percentage || 0);
+
+        updateData.sale_price = finalDiscount > 0
+          ? finalPrice - (finalPrice * finalDiscount / 100)
+          : null;
+      }
     }
 
     const { data, error } = await supabase
@@ -250,6 +275,8 @@ export const productService = {
         description,
         price,
         stock,
+        discount_percentage,
+        sale_price,
         created_at,
         updated_at,
         product_images!fk_product_images_product (
@@ -362,6 +389,8 @@ export const productService = {
           description,
           price,
           stock,
+          discount_percentage,
+          sale_price,
           created_at,
           updated_at,
           product_images!fk_product_images_product (

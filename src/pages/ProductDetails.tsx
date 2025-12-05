@@ -199,15 +199,19 @@ const ProductDetails: React.FC = () => {
   };
 
   const handleAddToCart = () => {
+    const effectivePrice = (product as any).sale_price && (product as any).discount_percentage > 0
+      ? (product as any).sale_price
+      : product.price;
+
     for (let i = 0; i < quantity; i++) {
       dispatch({
         type: 'ADD_TO_CART',
         payload: {
           id: product.id,
           title: product.name,
-          price: product.price,
-          image: product.product_images && product.product_images.length > 0 
-            ? product.product_images[0].image_url 
+          price: effectivePrice,
+          image: product.product_images && product.product_images.length > 0
+            ? product.product_images[0].image_url
             : '/placeholder.png',
           weight: 1, // Default weight
         },
