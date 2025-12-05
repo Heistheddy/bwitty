@@ -77,6 +77,8 @@ const AdminDashboard: React.FC = () => {
           description,
           price,
           stock,
+          discount_percentage,
+          sale_price,
           created_at,
           updated_at,
           product_images!fk_product_images_product (
@@ -228,24 +230,18 @@ const AdminDashboard: React.FC = () => {
 
         const updatedProduct = await productService.update(editingProduct.id, payload);
         console.log('Updated product:', updatedProduct);
-        
-        // Update local state immediately
-        setProducts(prev => prev.map(p => 
-          p.id === editingProduct.id 
-            ? { ...p, ...updatedProduct }
-            : p
-        ));
-        
+
         // Handle new images
         if (imageFiles && imageFiles.length > 0) {
           for (const file of imageFiles) {
             const imageUrl = await productService.uploadImage(file, editingProduct.id);
             await productService.addProductImage(editingProduct.id, imageUrl);
           }
-          // Reload products to get updated images
-          await loadProducts();
         }
-        
+
+        // Always reload products to get all updated data including discount fields
+        await loadProducts();
+
         toast({
           title: "Success",
           description: "Product updated successfully.",
@@ -1074,10 +1070,6 @@ const ProductForm: React.FC<{
     setIsSubmitting(true);
     try {
       await onSave(formData, newImageFiles.length > 0 ? newImageFiles : undefined);
-      // Refresh products list to show updated thumbnails
-      if (typeof window !== 'undefined' && window.location.pathname.includes('/admin/dashboard')) {
-        window.location.reload();
-      }
     } catch (error) {
       console.error('Form submission error:', error);
       toast({
