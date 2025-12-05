@@ -108,7 +108,11 @@ export const productService = {
   // Helper function to pick only defined values
   pickDefined(obj: any) {
     return Object.fromEntries(
-      Object.entries(obj).filter(([_, v]) => v !== undefined && v !== null && v !== '')
+      Object.entries(obj).filter(([_, v]) => {
+        if (v === undefined || v === null) return false;
+        if (v === '' && typeof v === 'string') return false;
+        return true;
+      })
     );
   },
 

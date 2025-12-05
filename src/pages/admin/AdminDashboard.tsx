@@ -213,8 +213,10 @@ const AdminDashboard: React.FC = () => {
           price: productData.price,
           stock: productData.stock,
           is_active: productData.is_active,
-          discount_percentage: productData.discount_percentage
+          discount_percentage: productData.discount_percentage ?? 0
         });
+
+        console.log('Update payload:', payload);
 
         if (Object.keys(payload).length === 0) {
           toast({
@@ -225,6 +227,7 @@ const AdminDashboard: React.FC = () => {
         }
 
         const updatedProduct = await productService.update(editingProduct.id, payload);
+        console.log('Updated product:', updatedProduct);
         
         // Update local state immediately
         setProducts(prev => prev.map(p => 
@@ -604,6 +607,9 @@ const AdminDashboard: React.FC = () => {
                       <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Price
                       </th>
+                      <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
+                        Discount
+                      </th>
                       <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
                         Stock
                       </th>
@@ -632,8 +638,15 @@ const AdminDashboard: React.FC = () => {
                         </td>
                         <td className="px-3 sm:px-6 py-4">
                           <div>
-                            <div className="text-xs sm:text-sm font-medium text-gray-900 max-w-32 sm:max-w-xs truncate">
-                              {product.name}
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs sm:text-sm font-medium text-gray-900 max-w-32 sm:max-w-xs truncate">
+                                {product.name}
+                              </span>
+                              {product.discount_percentage > 0 && (
+                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-red-100 text-red-800">
+                                  {product.discount_percentage}% OFF
+                                </span>
+                              )}
                             </div>
                             <div className="text-xs text-gray-500 max-w-32 sm:max-w-xs truncate hidden sm:block">
                               {product.description}
@@ -641,7 +654,23 @@ const AdminDashboard: React.FC = () => {
                           </div>
                         </td>
                         <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-900">
-                          {formatPrice(product.price)}
+                          {product.discount_percentage > 0 && product.sale_price ? (
+                            <div className="flex flex-col">
+                              <span className="line-through text-gray-500 text-xs">{formatPrice(product.price)}</span>
+                              <span className="font-semibold text-red-600">{formatPrice(product.sale_price)}</span>
+                            </div>
+                          ) : (
+                            formatPrice(product.price)
+                          )}
+                        </td>
+                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-xs sm:text-sm hidden lg:table-cell">
+                          {product.discount_percentage > 0 ? (
+                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800">
+                              {product.discount_percentage}% OFF
+                            </span>
+                          ) : (
+                            <span className="text-gray-400 text-xs">No discount</span>
+                          )}
                         </td>
                         <td className="px-3 sm:px-6 py-4 whitespace-nowrap hidden md:table-cell">
                           <div className="text-xs sm:text-sm text-gray-900">{product.stock} units</div>
@@ -1051,7 +1080,11 @@ const ProductForm: React.FC<{
       }
     } catch (error) {
       console.error('Form submission error:', error);
-    } finally {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to save product. Please try again.",
+        variant: "destructive",
+      });
       setIsSubmitting(false);
     }
   };
